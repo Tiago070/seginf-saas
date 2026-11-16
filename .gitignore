@@ -1,0 +1,24 @@
+# Arquivos temporários de editores e sistemas operacionais
+.DS_Store
+Thumbs.db
+*.swp
+
+# Arquivos temporários e imagens de máquinas virtuais
+*.log
+*.tmp
+*.bak
+*.iso
+*.vdi
+*.vmdk
+*.ova
+.vagrant/
+
+# Chaves privadas
+*.key
+*.pem
+id_rsa*
+!id_rsa*.pub
+id_ed25519*
+!id_ed25519*.pub
+secring*
+private-keys-v1.d/

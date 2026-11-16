@@ -8,7 +8,7 @@
 | Curso | Bacharelado em Sistemas de Informação, 6º período |
 | Disciplina | Segurança da Informação |
 | Professor | Roitier Campos Gonçalves |
-| Integrantes | Tiago Cardoso Ferreira, Luanna Fernandes, Felipe Ramos |
+| Integrantes | Tiago [sobrenome], Luanna [sobrenome], Felipe [sobrenome] |
 | Prazo de entrega | 26/11/2026 |
 | Valor | 4 pontos (1 de parte teórica/GIT e 3 de parte prática) + 1 ponto extra de desenvolvimento em sala |
 
@@ -83,10 +83,10 @@ Cada item abaixo vem do enunciado e aponta para a etapa do plano que o atende. M
 | Critério do enunciado | Consequência para o grupo |
 |---|---|
 | Todos os membros apresentam; ninguém entra no grupo depois | Os três precisam dominar o trabalho inteiro, não só a sua parte |
-| Arguição individual sobre código e documentação; se um não demonstrar pleno conhecimento, o grupo é penalizado | Nenhuma linha de código ou de configuração entra sem que o autor e o revisor consigam explicá-la |
+| Arguição individual sobre código e documentação; se um não demonstrar pleno conhecimento, o grupo é penalizado | Nenhuma linha de código ou de configuração entra sem que o autor e quem conferiu consigam explicá-la |
 | Código no GitHub passa por detecção de similaridade (MOSS; exemplo de limite: 20%); acima do limite, nota zero sem reavaliação | Scripts escritos e adaptados pelo grupo, com estrutura e comentários próprios; fonte citada no cabeçalho quando houver base externa |
 | Testes de robustez e segurança em ambiente do professor (penetração básica e varredura de vulnerabilidades) | A Etapa 10 reproduz esses ataques antes da apresentação |
-| Documentação no GitHub é critério de peso: README detalhado, diagramas de arquitetura, comentários em padrão consistente | Guia de estilo na Etapa 0 e revisão de documentação em todo PR |
+| Documentação no GitHub é critério de peso: README detalhado, diagramas de arquitetura, comentários em padrão consistente | Guia de estilo na Etapa 0 e conferência da documentação a cada entrega |
 | O professor pode restringir bibliotecas e frameworks, exigindo implementação do zero | Somente iptables e seus módulos nativos; sem `ufw`, `fail2ban` ou similares |
 | Faltas, atrasos e saídas antecipadas afetam o ponto extra | Presença nas aulas de desenvolvimento é parte do plano |
 | Ordem de apresentação: 3, 7, 10, 2, 8, 4, 6, 5, 9, 1 | O Grupo 7 apresenta em **segundo lugar**; o congelamento de código é antecipado (Etapa 10) |
@@ -157,8 +157,6 @@ Base do firewall (Etapa 5). Tudo que não está na tabela fica bloqueado.
 .
 |-- README.md
 |-- .gitignore
-|-- .github/
-|   +-- pull_request_template.md
 |-- config/
 |   +-- lab.env                  # IPs, portas, usuários (sem segredos)
 |-- docs/
@@ -198,12 +196,12 @@ Base do firewall (Etapa 5). Tudo que não está na tabela fica bloqueado.
 
 ### 5.1 Cronograma
 
-Hoje é 07/11/2026 e o prazo é 26/11/2026 (quinta-feira): **19 dias**. Como o Grupo 7 é o segundo a apresentar, o código congela no dia 21/11. O dia 20/11 é feriado nacional (Consciência Negra) e o dia 15/11 é domingo; ambos contam como folga na prática, mas não como dias de aula.
+Hoje é 09/11/2026 e o prazo é 26/11/2026 (quinta-feira): **17 dias**. Como o Grupo 7 é o segundo a apresentar, o código congela no dia 21/11. O dia 20/11 é feriado nacional (Consciência Negra) e o dia 15/11 é domingo; ambos contam como folga na prática, mas não como dias de aula.
 
 | Fase | Período | Etapas | Saída da fase |
 |---|---|---|---|
-| 0. Fundação | 07 a 09/11 | 0 e 1 | Repositório organizado e laboratório de pé, com snapshots |
-| 1. Rede e linha de base | 10 a 11/11 | 2 | Rede estática, rotas, serviços simulados e **Nmap "antes"** |
+| 0. Fundação | 09 a 10/11 | 0 e 1 | Repositório organizado e laboratório de pé, com snapshots |
+| 1. Rede e linha de base | 10 a 12/11 | 2 | Rede estática, rotas, serviços simulados e **Nmap "antes"** |
 | 2. Documentos de base (paralelo) | 10 a 14/11 | 3 e 4 | Relatório de ameaças e capítulo da PSI |
 | 3. Perímetro e acesso | 12 a 17/11 | 5, 6 e 7 | Firewall, SSH e SO endurecidos |
 | 4. Criptografia e integridade | 14 a 18/11 | 8 e 9 | GPG e verificação SHA-256 |
@@ -212,11 +210,11 @@ Hoje é 07/11/2026 e o prazo é 26/11/2026 (quinta-feira): **19 dias**. Como o G
 | 7. Ensaio | 24 e 25/11 | 13 | Grupo pronto para a arguição |
 | Entrega | 26/11 | n/a | Repositório e relatório entregues |
 
-### 5.2 Trilhas e revisão cruzada
+### 5.2 Trilhas e conferência cruzada
 
-Cada integrante é responsável por uma trilha, mas **todo PR é revisado por outro integrante**, que precisa ler e executar o que foi entregue. Isso distribui o conhecimento e prepara a arguição individual.
+Cada integrante é responsável por uma trilha e testa o que produz na própria máquina. Ao fim de cada etapa, o integrante indicado em **Confere** faz `git pull`, lê os arquivos e roda o resultado uma vez no próprio laboratório. É rápido e distribui o conhecimento, o que prepara a arguição individual.
 
-| Trilha | Integrante | Foco | Etapas | Revisores (conforme cada etapa) |
+| Trilha | Integrante | Foco | Etapas | Conferem a etapa |
 |---|---|---|---|---|
 | **A** | Tiago | Laboratório, rede e firewall | 1, 2, 3, 5 | B e C |
 | **B** | Luanna | Acesso, hardening e PSI | 4, 6, 7 | C e A |
@@ -231,17 +229,17 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 0: Alinhamento e repositório
-**Responsável:** todos | **Prazo:** 08/11
+**Responsável:** todos | **Prazo:** 09/11
 
 - **Objetivo:** base do projeto pronta para os três trabalharem sem conflito.
-- **Entregáveis:** repositório criado; estrutura de pastas da seção 4; `.gitignore`; `config/lab.env` (modelo); `docs/guia-de-estilo.md` (cabeçalho padrão de script, comentários em português, nomes de variáveis, formato de commit); `.github/pull_request_template.md`; uma issue por etapa com o checklist de aceite; `main` protegida (PR com uma aprovação); `docs/equipe.md` com os integrantes e as trilhas (A: Tiago, B: Luanna, C: Felipe).
-- **Aceite:** cada integrante clonou, criou branch, abriu PR e teve aprovação de outro; o `git log` mostra os três autores com o e-mail vinculado ao GitHub.
-- **Defesa:** como o grupo dividiu o trabalho e revisa as entregas? Onde ficam registradas as decisões?
+- **Entregáveis:** repositório criado; estrutura de pastas da seção 4; `.gitignore`; `config/lab.env` (modelo); `docs/guia-de-estilo.md` (cabeçalho padrão de script, comentários em português, nomes de variáveis, formato de commit); `docs/equipe.md` com os integrantes e as trilhas (A: Tiago, B: Luanna, C: Felipe).
+- **Aceite:** cada integrante clonou o repositório, preencheu o próprio bloco em `docs/equipe.md` e fez commit e push; o `git log` mostra os três autores com o e-mail vinculado ao GitHub.
+- **Defesa:** como o grupo dividiu o trabalho e confere as entregas? Onde ficam registradas as decisões?
 
 ---
 
 #### Etapa 1: Laboratório virtual
-**Responsável:** A | **Revisor:** B | **Prazo:** 09/11
+**Responsável:** A | **Confere:** B | **Prazo:** 10/11
 
 - **Objetivo:** ambiente reproduzível com três máquinas: `srv-saas` (Ubuntu Server com duas interfaces), `cliente-externo` (Linux com Nmap, no lado WAN) e `estacao-admin` (lado LAN).
 - **Entregáveis:** `docs/arquitetura/laboratorio.md` com hipervisor, versão do Ubuntu, redes virtuais, recursos e passo a passo; snapshot `base-limpa` de cada VM.
@@ -252,7 +250,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 2: Rede, rotas e serviços simulados (R2.1)
-**Responsável:** A | **Revisor:** C | **Prazo:** 11/11
+**Responsável:** A | **Confere:** C | **Prazo:** 12/11
 
 - **Objetivo:** servidor com IP estático em LAN e WAN, roteamento estático e serviços do segmento no ar, **antes de qualquer regra de firewall**.
 - **Entregáveis:**
@@ -269,7 +267,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 3: Relatório de Ameaças (R1.1)
-**Responsável:** A | **Revisor:** B | **Prazo:** 14/11 | *trilha de documentação, em paralelo*
+**Responsável:** A | **Confere:** B | **Prazo:** 14/11 | *trilha de documentação, em paralelo*
 
 - **Objetivo:** identificar 2 vetores de ataque específicos de SaaS multi-tenant, fundamentá-los nas fontes exigidas e ligar cada medida preventiva a um controle realmente implementado no laboratório.
 - **Candidatos a avaliar** (a decisão final é do grupo e deve ser justificada em `docs/decisoes.md`):
@@ -288,7 +286,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 4: Política de Segurança da Informação (R1.2)
-**Responsável:** B | **Revisor:** C | **Prazo:** 14/11 | *trilha de documentação, em paralelo*
+**Responsável:** B | **Confere:** C | **Prazo:** 14/11 | *trilha de documentação, em paralelo*
 
 - **Objetivo:** capítulo de PSI coerente com o cenário, em que cada diretriz tem um controle técnico ou procedimento correspondente.
 - **Entregáveis:** `docs/psi/capitulo-psi.md` com objetivo, escopo, responsabilidades e três blocos de diretrizes:
@@ -301,7 +299,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 5: Firewall com iptables (R2.2, R2.3, R2.4)
-**Responsável:** A | **Revisor:** B | **Prazo:** 16/11
+**Responsável:** A | **Confere:** B | **Prazo:** 16/11
 
 - **Objetivo:** perímetro com política restritiva, liberando somente o que a seção 3.3 define.
 - **Entregáveis:**
@@ -317,7 +315,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 6: Hardening do SSH (R2.5)
-**Responsável:** B | **Revisor:** C | **Prazo:** 16/11
+**Responsável:** B | **Confere:** C | **Prazo:** 16/11
 
 - **Objetivo:** acesso remoto privilegiado só por quem deve, só por chave, só de onde deve.
 - **Entregáveis:**
@@ -333,7 +331,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 7: Hardening do sistema operacional (R2.6)
-**Responsável:** B | **Revisor:** A | **Prazo:** 17/11
+**Responsável:** B | **Confere:** A | **Prazo:** 17/11
 
 - **Objetivo:** reduzir a superfície de ataque do servidor (Aulas 03 e 04).
 - **Entregáveis:** `scripts/hardening-so.sh` e `docs/hardening/so.md` com **antes e depois** de:
@@ -349,7 +347,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 8: Gestão de chaves GPG (R3.1, E3)
-**Responsável:** C | **Revisor:** A | **Prazo:** 18/11
+**Responsável:** C | **Confere:** A | **Prazo:** 18/11
 
 - **Objetivo:** identidade criptográfica dos administradores e troca segura de um arquivo sensível (Aula 10).
 - **Entregáveis:**
@@ -368,7 +366,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 9: Verificação de integridade SHA-256 (R3.2, E2)
-**Responsável:** C | **Revisor:** B | **Prazo:** 18/11
+**Responsável:** C | **Confere:** B | **Prazo:** 18/11
 
 - **Objetivo:** detectar alteração não autorizada em `/etc/passwd`, `/etc/shadow` e nas regras salvas do iptables.
 - **Entregáveis:**
@@ -394,13 +392,13 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
   - **Teste cruzado:** cada integrante testa o módulo de outro.
   - **Teste do zero:** reconstruir o laboratório em VM limpa seguindo somente este README.
   - `evidencias/README.md` com o índice (seção 8).
-- **Aceite:** testes aprovados ou falhas documentadas com correção planejada; as quatro evidências de E4 existem com data, host e comando visíveis; após 21/11 só entram correções de bug, por PR revisado.
+- **Aceite:** testes aprovados ou falhas documentadas com correção planejada; as quatro evidências de E4 existem com data, host e comando visíveis; após 21/11 só entram correções de bug, combinadas no grupo e testadas antes do commit.
 - **Defesa:** que ataque o grupo não conseguiu bloquear e por quê? O que acontece com a disponibilidade durante a limitação de taxa?
 
 ---
 
 #### Etapa 11: Relatório Técnico Unificado em PDF (E1)
-**Responsável:** C (com contribuição de todos) | **Revisor:** A | **Prazo:** 22 a 24/11
+**Responsável:** C (com contribuição de todos) | **Confere:** A | **Prazo:** 22 a 24/11
 
 - **Objetivo:** consolidar os textos de `docs/` em um relatório único em PDF.
 - **Estrutura sugerida:** 1 Introdução e escopo; 2 Cenário e justificativa da arquitetura (segmento e literatura); 3 Topologia (diagrama detalhado); 4 Relatório de ameaças; 5 Capítulo da PSI; 6 Rede e roteamento; 7 Firewall, com **cada** regra; 8 Hardening, com **cada** parâmetro do `sshd_config` e do sistema operacional; 9 GPG; 10 Integridade; 11 Testes e evidências; 12 Conclusão; Referências.
@@ -432,15 +430,15 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 
 ## 6. Fluxo de trabalho com Git
 
-Todos os integrantes desenvolvem e fazem commit no mesmo repositório.
+Todos trabalham direto na `main` do mesmo repositório, cada um na sua trilha, testando na própria máquina.
 
-- **Branches:** `main` protegida; uma branch por etapa, no formato `etapa-05-firewall`; PRs pequenos e frequentes.
-- **Commits:** mensagens em português no formato `tipo(escopo): descrição`, com os tipos `feat`, `fix`, `docs`, `test` e `chore` (exemplo: `feat(firewall): limita novas conexões SSH por IP`). Commits frequentes e atômicos.
-- **Identidade:** cada integrante configura `git config user.name` e `git config user.email` com o e-mail da própria conta do GitHub. Ninguém commita em nome de outro: a arguição confronta quem escreveu cada parte.
-- **Pull Request:** o modelo em `.github/pull_request_template.md` exige requisito atendido (ID da seção 2), arquivos alterados, como testar, evidência anexada, comentários no padrão, `shellcheck` e confirmação de teste a partir de snapshot limpo. O revisor lê e **executa** antes de aprovar.
-- **Sincronização:** `git pull --rebase` antes de cada `push`; resolver conflitos em conjunto.
+- **Só commita o que roda:** cada integrante executa e testa o que produziu no próprio laboratório (a partir de snapshot limpo) e só então faz commit e `git push`. Se algo quebrar, corrige antes de enviar.
+- **Sincronização:** `git pull --rebase` antes de começar a trabalhar e antes de cada `git push`.
+- **Commits:** em português, no formato `tipo(escopo): descrição`, com os tipos `feat`, `fix`, `docs`, `test` e `chore` (exemplo: `feat(firewall): limita novas conexões SSH por IP`). Pequenos e frequentes.
+- **Identidade:** cada integrante configura `git config user.name` e `git config user.email` com o e-mail da própria conta do GitHub. Ninguém commita em nome de outro: o histórico do Git é o registro de autoria que a arguição vai conferir.
+- **Arquivos compartilhados** (`config/lab.env`, `docs/decisoes.md`, `evidencias/README.md` e este `README.md`): avisar o grupo e dar `git pull` antes de editar. Fora isso, cada um altera apenas os arquivos da própria trilha.
+- **Conferência cruzada:** ao fim de cada etapa, quem está indicado em **Confere** puxa o código, lê e roda uma vez no próprio laboratório.
 - **Segredos:** nunca commitar chaves privadas, senhas ou tokens reais. Exemplos são sempre fictícios e identificados como tais.
-- **Issues e milestones:** uma issue por etapa, com o checklist de aceite; a issue só fecha com o PR aprovado e a evidência indexada.
 
 ---
 
@@ -504,12 +502,13 @@ Como retomar o acesso pelo console da VM e restaurar o snapshot caso o firewall 
 | Firewall ou SSH bloqueia o próprio acesso | Snapshot antes de cada etapa, restauração automática temporária, segunda sessão aberta, console da VM |
 | `ssh.socket` no Ubuntu 24.04 ignora a porta configurada | Conferir com `ss -tlnp` e testar a partir de outra máquina |
 | Varredura "antes" perdida | Executar na Etapa 2 e indexar a evidência na hora |
-| Regra ou parâmetro que ninguém sabe explicar | Matriz de regras e tabela de parâmetros obrigatórias; revisor precisa executar; perguntas de defesa por etapa |
+| Regra ou parâmetro que ninguém sabe explicar | Matriz de regras e tabela de parâmetros obrigatórias; quem confere executa; perguntas de defesa por etapa |
 | Similaridade alta no MOSS | Código próprio, estrutura e comentários do cenário SaaS, fonte citada, conferência na Etapa 12 |
 | Ambiente do professor diferente do laboratório | Confirmar a versão do Ubuntu e testar os scripts em instalação limpa |
 | Scripts que não persistem ou duplicam regras | Critério de aceite: reinício e dupla execução |
 | Segredo ou chave privada no Git | Conferência de `git diff --cached` e varredura do histórico na Etapa 12 |
-| Um integrante concentra o conhecimento | Revisão cruzada obrigatória e ensaio em que cada um apresenta o módulo de outro |
+| Um integrante concentra o conhecimento | Conferência cruzada ao fim de cada etapa e ensaio em que cada um apresenta o módulo de outro |
+| Commit direto na `main` quebra o trabalho de outro | `git pull --rebase` antes de começar e de enviar; só enviar o que foi testado; cada um mexe na própria trilha; avisar o grupo antes de editar arquivos compartilhados |
 | Prazo curto e feriados | Congelamento em 21/11; documentos de base em paralelo desde a Etapa 3 |
 
 ---
