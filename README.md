@@ -8,7 +8,7 @@
 | Curso | Bacharelado em Sistemas de Informação, 6º período |
 | Disciplina | Segurança da Informação |
 | Professor | Roitier Campos Gonçalves |
-| Integrantes | Tiago [sobrenome], Luanna [sobrenome], Felipe [sobrenome] |
+| Integrantes | Tiago Cardoso Ferreira, Luanna Fernandes, Felipe Ramos |
 | Prazo de entrega | 26/11/2026 |
 | Valor | 4 pontos (1 de parte teórica/GIT e 3 de parte prática) + 1 ponto extra de desenvolvimento em sala |
 
