@@ -8,7 +8,7 @@
 | Curso | Bacharelado em Sistemas de Informação, 6º período |
 | Disciplina | Segurança da Informação |
 | Professor | Roitier Campos Gonçalves |
-| Integrantes | Tiago [sobrenome], Luanna [sobrenome], Felipe [sobrenome] |
+| Integrantes | Tiago Cardoso Ferreira, Luanna Fernandes, Felipe Ramos |
 | Prazo de entrega | 26/11/2026 |
 | Valor | 4 pontos (1 de parte teórica/GIT e 3 de parte prática) + 1 ponto extra de desenvolvimento em sala |
 
@@ -196,17 +196,17 @@ Base do firewall (Etapa 5). Tudo que não está na tabela fica bloqueado.
 
 ### 5.1 Cronograma
 
-Hoje é 09/11/2026 e o prazo é 26/11/2026 (quinta-feira): **17 dias**. Como o Grupo 7 é o segundo a apresentar, o código congela no dia 21/11. O dia 20/11 é feriado nacional (Consciência Negra) e o dia 15/11 é domingo; ambos contam como folga na prática, mas não como dias de aula.
+Hoje é 16/11/2026 e o prazo é 26/11/2026 (quinta-feira): **10 dias**. Como o Grupo 7 é o segundo a apresentar, o código congela no dia 22/11. O dia 20/11 é feriado nacional (Consciência Negra) e não conta como dia de aula. Com tão pouco tempo, as três trilhas começam no mesmo dia: as etapas que não dependem do laboratório (4 e 8) começam já.
 
 | Fase | Período | Etapas | Saída da fase |
 |---|---|---|---|
-| 0. Fundação | 09 a 10/11 | 0 e 1 | Repositório organizado e laboratório de pé, com snapshots |
-| 1. Rede e linha de base | 10 a 12/11 | 2 | Rede estática, rotas, serviços simulados e **Nmap "antes"** |
-| 2. Documentos de base (paralelo) | 10 a 14/11 | 3 e 4 | Relatório de ameaças e capítulo da PSI |
-| 3. Perímetro e acesso | 12 a 17/11 | 5, 6 e 7 | Firewall, SSH e SO endurecidos |
-| 4. Criptografia e integridade | 14 a 18/11 | 8 e 9 | GPG e verificação SHA-256 |
-| 5. Testes | 18 a 21/11 | 10 | Evidências completas e **congelamento do código em 21/11** |
-| 6. Fechamento | 21 a 24/11 | 11 e 12 | Relatório PDF e repositório final |
+| 0. Fundação | 16/11 | 0 e 1 | Repositório organizado e laboratório de pé, com snapshots |
+| 1. Rede e linha de base | 16 a 17/11 | 2 | Rede estática, rotas, serviços simulados e **Nmap "antes"** |
+| 2. Documentos de base (paralelo) | 16 a 19/11 | 3 e 4 | Relatório de ameaças e capítulo da PSI |
+| 3. Perímetro e acesso | 17 a 20/11 | 5, 6 e 7 | Firewall, SSH e SO endurecidos |
+| 4. Criptografia e integridade | 16 a 19/11 | 8 e 9 | GPG e verificação SHA-256 |
+| 5. Testes | 20 a 22/11 | 10 | Evidências completas e **congelamento do código em 22/11** |
+| 6. Fechamento | 22 a 24/11 | 11 e 12 | Relatório PDF e repositório final |
 | 7. Ensaio | 24 e 25/11 | 13 | Grupo pronto para a arguição |
 | Entrega | 26/11 | n/a | Repositório e relatório entregues |
 
@@ -229,7 +229,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 0: Alinhamento e repositório
-**Responsável:** todos | **Prazo:** 09/11
+**Responsável:** todos | **Prazo:** 16/11
 
 - **Objetivo:** base do projeto pronta para os três trabalharem sem conflito.
 - **Entregáveis:** repositório criado; estrutura de pastas da seção 4; `.gitignore`; `config/lab.env` (modelo); `docs/guia-de-estilo.md` (cabeçalho padrão de script, comentários em português, nomes de variáveis, formato de commit); `docs/equipe.md` com os integrantes e as trilhas (A: Tiago, B: Luanna, C: Felipe).
@@ -239,7 +239,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 1: Laboratório virtual
-**Responsável:** A | **Confere:** B | **Prazo:** 10/11
+**Responsável:** A | **Confere:** B | **Prazo:** 16/11
 
 - **Objetivo:** ambiente reproduzível com três máquinas: `srv-saas` (Ubuntu Server com duas interfaces), `cliente-externo` (Linux com Nmap, no lado WAN) e `estacao-admin` (lado LAN).
 - **Entregáveis:** `docs/arquitetura/laboratorio.md` com hipervisor, versão do Ubuntu, redes virtuais, recursos e passo a passo; snapshot `base-limpa` de cada VM.
@@ -251,7 +251,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 2: Rede, rotas e serviços simulados (R2.1)
-**Responsável:** A | **Confere:** C | **Prazo:** 12/11
+**Responsável:** A | **Confere:** C | **Prazo:** 17/11
 
 - **Objetivo:** servidor com IP estático em LAN e WAN, roteamento estático e serviços do segmento no ar, **antes de qualquer regra de firewall**.
 - **Entregáveis:**
@@ -268,7 +268,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 3: Relatório de Ameaças (R1.1)
-**Responsável:** A | **Confere:** B | **Prazo:** 14/11 | *trilha de documentação, em paralelo*
+**Responsável:** A | **Confere:** B | **Prazo:** 19/11 | *trilha de documentação, em paralelo*
 
 - **Objetivo:** identificar 2 vetores de ataque específicos de SaaS multi-tenant, fundamentá-los nas fontes exigidas e ligar cada medida preventiva a um controle realmente implementado no laboratório.
 - **Candidatos a avaliar** (a decisão final é do grupo e deve ser justificada em `docs/decisoes.md`):
@@ -287,7 +287,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 4: Política de Segurança da Informação (R1.2)
-**Responsável:** B | **Confere:** C | **Prazo:** 14/11 | *trilha de documentação, em paralelo*
+**Responsável:** B | **Confere:** C | **Prazo:** 18/11 | *trilha de documentação, em paralelo*
 
 - **Objetivo:** capítulo de PSI coerente com o cenário, em que cada diretriz tem um controle técnico ou procedimento correspondente.
 - **Entregáveis:** `docs/psi/capitulo-psi.md` com objetivo, escopo, responsabilidades e três blocos de diretrizes:
@@ -300,7 +300,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 5: Firewall com iptables (R2.2, R2.3, R2.4)
-**Responsável:** A | **Confere:** B | **Prazo:** 16/11
+**Responsável:** A | **Confere:** B | **Prazo:** 18/11
 
 - **Objetivo:** perímetro com política restritiva, liberando somente o que a seção 3.3 define.
 - **Entregáveis:**
@@ -316,7 +316,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 6: Hardening do SSH (R2.5)
-**Responsável:** B | **Confere:** C | **Prazo:** 16/11
+**Responsável:** B | **Confere:** C | **Prazo:** 19/11
 
 - **Objetivo:** acesso remoto privilegiado só por quem deve, só por chave, só de onde deve.
 - **Entregáveis:**
@@ -332,7 +332,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 7: Hardening do sistema operacional (R2.6)
-**Responsável:** B | **Confere:** A | **Prazo:** 17/11
+**Responsável:** B | **Confere:** A | **Prazo:** 20/11
 
 - **Objetivo:** reduzir a superfície de ataque do servidor (Aulas 03 e 04).
 - **Entregáveis:** `scripts/hardening-so.sh` e `docs/hardening/so.md` com **antes e depois** de:
@@ -367,7 +367,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 9: Verificação de integridade SHA-256 (R3.2, E2)
-**Responsável:** C | **Confere:** B | **Prazo:** 18/11
+**Responsável:** C | **Confere:** B | **Prazo:** 19/11
 
 - **Objetivo:** detectar alteração não autorizada em `/etc/passwd`, `/etc/shadow` e nas regras salvas do iptables.
 - **Entregáveis:**
@@ -382,7 +382,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 ---
 
 #### Etapa 10: Testes, robustez e evidências (E4)
-**Responsável:** todos | **Prazo:** 18 a 21/11 | **Congelamento do código: 21/11**
+**Responsável:** todos | **Prazo:** 20 a 22/11 | **Congelamento do código: 22/11**
 
 - **Objetivo:** atacar o próprio ambiente como o professor fará e reunir as evidências obrigatórias.
 - **Entregáveis:**
@@ -393,7 +393,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
   - **Teste cruzado:** cada integrante testa o módulo de outro.
   - **Teste do zero:** reconstruir o laboratório em VM limpa seguindo somente este README.
   - `evidencias/README.md` com o índice (seção 8).
-- **Aceite:** testes aprovados ou falhas documentadas com correção planejada; as quatro evidências de E4 existem com data, host e comando visíveis; após 21/11 só entram correções de bug, combinadas no grupo e testadas antes do commit.
+- **Aceite:** testes aprovados ou falhas documentadas com correção planejada; as quatro evidências de E4 existem com data, host e comando visíveis; após 22/11 só entram correções de bug, combinadas no grupo e testadas antes do commit.
 - **Defesa:** que ataque o grupo não conseguiu bloquear e por quê? O que acontece com a disponibilidade durante a limitação de taxa?
 
 ---
@@ -510,7 +510,7 @@ Como retomar o acesso pelo console da VM e restaurar o snapshot caso o firewall 
 | Segredo ou chave privada no Git | Conferência de `git diff --cached` e varredura do histórico na Etapa 12 |
 | Um integrante concentra o conhecimento | Conferência cruzada ao fim de cada etapa e ensaio em que cada um apresenta o módulo de outro |
 | Commit direto na `main` quebra o trabalho de outro | `git pull --rebase` antes de começar e de enviar; só enviar o que foi testado; cada um mexe na própria trilha; avisar o grupo antes de editar arquivos compartilhados |
-| Prazo curto e feriados | Congelamento em 21/11; documentos de base em paralelo desde a Etapa 3 |
+| Prazo curto e feriados | Congelamento em 22/11; documentos de base em paralelo desde a Etapa 3 |
 
 ---
 
