@@ -1,5 +1,5 @@
 # Índice de evidências
-Esta pasta reunirá as evidências do projeto, nomeadas conforme o requisito atendido.
+Esta pasta reúne as evidências do projeto, nomeadas conforme o requisito atendido.
 As capturas devem mostrar host, usuário, data e comando executado.
 Registre uma linha no índice para cada evidência produzida.
 
@@ -16,6 +16,10 @@ Registre uma linha no índice para cada evidência produzida.
 | `09-etapa1-cliente-externo-ping-srv-saas.png` | Etapa 1 | `ping -c 4 10.0.2.3`; `date` | Conectividade do cliente externo com o servidor pela WAN, quatro respostas recebidas | Tiago | 17/11/2026 |
 | `10-etapa2-r2.1-rota-estatica-temporaria.png` | R2.1 | `ip route`; `ip neigh show 10.10.10.2`; `ping -c 4 10.10.10.2`; `ping -c 4 10.10.20.1` | Rota temporária via `10.10.10.2`, vizinhança alcançável e ping até a interface do roteador em `lan-ci` | Tiago | Data não visível na captura |
 | `11-etapa1-srv-saas-internet-apt-update.png` | Etapa 1 | `getent hosts archive.ubuntu.com`; `sudo apt update`; `date` | Resolução DNS e atualização dos índices dos repositórios concluídas no servidor | Tiago | 18/11/2026 UTC |
+| `12-R2.1-rede-persistente.png` | R2.1 | `ip -br addr`; `ip route`; `sysctl net.ipv4.ip_forward`; `date` | Endereços WAN e LAN, rotas default e estática e encaminhamento IPv4 após reinício | Tiago | 18/11/2026 UTC |
+| `13-R2.1-servicos-https-wan.png` | R2.1 | `curl -I http://10.0.2.3`; `curl -k -I https://10.0.2.3`; `date` | Acesso externo ao Nginx, redirecionamento HTTP 301 para HTTPS e resposta HTTPS 200 | Tiago | 18/11/2026 UTC |
+| `14-R2.1-nmap-antes-firewall.png` | R2.1, E4 | `nmap -Pn -p 80,443,5432 10.0.2.3`; `date` | Linha de base antes do firewall: HTTP e HTTPS abertos, PostgreSQL fechado na WAN | Tiago | 18/11/2026 UTC |
+| `15-R2.1-postgresql-pg-hba.png` | R2.1 | `sudo -u postgres psql -d postgres -c "SELECT line_number, type, database, user_name, address, auth_method, error FROM pg_hba_file_rules;"`; `date` | Regra de host para `saas_demo` restrita a `10.10.10.0/24` com `scram-sha-256`; sem erro reportado | Tiago | 18/11/2026 UTC |
 
 As capturas 01 a 03 são preliminares e foram mantidas apenas para histórico.
 As capturas 04 a 09 mostram os comandos, o prompt com usuário e host e a data.
@@ -24,3 +28,6 @@ Ela mostra a suíte de repositórios `resolute`; a versão Ubuntu 26.04.1 LTS fo
 confirmada nas três VMs e registrada em `config/lab.env`.
 A captura 10 também é preliminar por não exibir a data; refaça-a com `date`
 visível para atender integralmente à convenção de evidências.
+As capturas 12 a 15 registram os testes da Etapa 2 após a configuração
+persistente, a partir do cliente externo e no PostgreSQL. A captura 14 é a
+linha de base Nmap exigida antes do firewall.

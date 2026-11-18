@@ -1,4 +1,6 @@
 # Arquitetura
-Esta pasta reunirá os diagramas e a descrição do laboratório.
-Também conterá a documentação da topologia e da rede.
-Detalhes ainda não definidos serão registrados quando forem acordados.
+
+- [laboratorio.md](./laboratorio.md): criação, configuração e recuperação das VMs.
+- [rede.md](./rede.md): Netplan, rotas, serviços, topologia detalhada e roteiro de testes da Etapa 2.
+
+Detalhes ainda não definidos permanecem marcados como `DEFINIR` ou `CONFERIR`.

@@ -56,7 +56,7 @@ Cada item abaixo vem do enunciado e aponta para a etapa do plano que o atende. M
 - [ ] **R1.2** Capítulo da PSI cobrindo controle de acesso, auditoria e uso aceitável, coerente com o cenário (Etapa 4)
 
 **Módulo 2: Rede, firewall e hardening**
-- [ ] **R2.1** IP estático nas interfaces interna (LAN) e externa (WAN) do Ubuntu Server e tabela de roteamento estático ajustada (Etapa 2)
+- [x] **R2.1** IP estático nas interfaces interna (LAN) e externa (WAN) do Ubuntu Server e tabela de roteamento estático ajustada (Etapa 2)
 - [ ] **R2.2** Script `firewall.sh` com política padrão DROP em INPUT e FORWARD (Etapa 5)
 - [ ] **R2.3** Apenas as portas estritamente necessárias ao segmento liberadas (Etapa 5)
 - [ ] **R2.4** Proteção contra varredura de portas e rate limiting contra força bruta e DoS (Etapa 5)
@@ -173,11 +173,13 @@ Base do firewall (Etapa 5). Tudo que não está na tabela fica bloqueado.
 |   |-- relatorio/               # fonte e PDF do relatório técnico unificado
 |   +-- defesa/                  # roteiro da apresentação e banco de perguntas
 |-- infra/
-|   |-- netplan/                 # 01-netcfg.yaml
+|   |-- netplan/                 # modelos Netplan
 |   |-- sshd/                    # configuração do sshd
-|   +-- servicos/                # Nginx e PostgreSQL do laboratório
+|   +-- servicos/                # espaço para modelos versionados de serviços
 |-- scripts/
 |   |-- lib/                     # funções compartilhadas
+|   |-- aplica-rede.sh
+|   |-- instala-servicos.sh
 |   |-- firewall.sh
 |   |-- hardening-ssh.sh
 |   |-- hardening-so.sh
@@ -255,15 +257,16 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 
 - **Objetivo:** servidor com IP estático em LAN e WAN, roteamento estático e serviços do segmento no ar, **antes de qualquer regra de firewall**.
 - **Entregáveis:**
-  - `infra/netplan/01-netcfg.yaml` com `dhcp4: no`, endereços, gateway, DNS e rota estática adicional (Aula "Configuração de IP no Ubuntu Server").
-  - Encaminhamento de pacotes habilitado de forma persistente (`net.ipv4.ip_forward=1`).
-  - Nginx com TLS autoassinado (443) e PostgreSQL (5432) escutando na LAN, em `infra/servicos/`.
-  - `docs/arquitetura/rede.md` explicando cada linha do netplan e a tabela de rotas (rota default, rota para rede, `next hop`, Aula 02).
+  - `infra/netplan/01-netcfg.yaml.tmpl`, renderizado em `/etc/netplan/01-netcfg.yaml` pelo script `scripts/aplica-rede.sh`, com IPs, gateway, DNS e rota estática adicional.
+  - Encaminhamento de pacotes habilitado de forma persistente (`net.ipv4.ip_forward=1`) pelo mesmo script.
+  - `scripts/instala-servicos.sh` instala Nginx com TLS autoassinado e PostgreSQL vinculado à LAN, com autenticação SCRAM restrita à rede LAN.
+  - `docs/arquitetura/rede.md` explica o modelo Netplan, a tabela de rotas, o `next hop`, o encaminhamento IPv4 e a topologia detalhada.
   - Diagrama da topologia (primeira versão detalhada) em `docs/arquitetura/`.
   - **Linha de base "antes":** varredura Nmap do `cliente-externo` contra o servidor **sem firewall**.
-- **Aceite:** `netplan apply` sem erros; `ip route` mostra a rota default e a estática; a configuração sobrevive a reinício; o Nmap lista as portas dos serviços; snapshot `pre-firewall` criado.
-- **Atenção:** a varredura "antes" precisa ser feita agora. Depois do firewall ela não pode mais ser reproduzida e o item E4 ficaria sem metade da evidência.
+- **Aceite:** `netplan try` confirmado sem erros; `ip route` mostra as rotas default e estática; a configuração sobrevive a reinício; Nginx e PostgreSQL escutam nos endereços e portas definidos; a captura Nmap antes do firewall é salva; snapshot `pre-firewall` criado.
+- **Atenção:** a captura Nmap da linha de base foi salva. Preserve-a para comparação com a varredura da Etapa 10, usando o mesmo comando após aplicar o firewall.
 - **Defesa:** o que é `next hop`? Qual a diferença entre rota estática e dinâmica? Por que habilitar `ip_forward`? Qual a diferença entre um host multi-homed e um roteador?
+- **Situação:** concluída em 18/11/2026; testes persistentes e de serviços registrados em `evidencias/`; snapshot `pre-firewall` criado.
 
 ---
 
@@ -462,13 +465,14 @@ cd <nome-do-repositório>
 ```
 
 ### 7.4 Aplicar a configuração, nesta ordem
-1. Rede e rotas (`infra/netplan/`)
-2. Serviços simulados (`infra/servicos/`)
-3. Firewall (`scripts/firewall.sh`)
-4. Hardening do SSH (`scripts/hardening-ssh.sh`)
-5. Hardening do sistema operacional (`scripts/hardening-so.sh`)
-6. GPG (`gpg/`)
-7. Verificação de integridade (`scripts/verifica-integridade.sh`)
+1. Rede e rotas (`sudo bash scripts/aplica-rede.sh`), conforme `docs/arquitetura/rede.md`.
+2. Serviços simulados (`sudo bash scripts/instala-servicos.sh`).
+3. Evidência Nmap antes do firewall, conforme `docs/arquitetura/rede.md`; depois, criar o snapshot `pre-firewall`.
+4. Firewall (`scripts/firewall.sh`).
+5. Hardening do SSH (`scripts/hardening-ssh.sh`).
+6. Hardening do sistema operacional (`scripts/hardening-so.sh`).
+7. GPG (`gpg/`).
+8. Verificação de integridade (`scripts/verifica-integridade.sh`).
 
 ### 7.5 Verificação rápida
 Comandos de conferência por etapa (por exemplo `iptables -S`, `sshd -T`, `gpg --list-sigs`) e o resultado esperado. *(a preencher)*

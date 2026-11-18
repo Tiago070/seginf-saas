@@ -1,0 +1,21 @@
+# IPs estáticos evitam que a rota e os serviços mudem após uma concessão DHCP.
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ${IFACE_LAN}:
+      dhcp4: false
+      addresses:
+        - ${LAN_IP_SERVIDOR}/${LAN_PREFIX}
+      routes:
+        - to: ${ROTA_ESTATICA_REDE}
+          via: ${ROTA_ESTATICA_VIA}
+    ${IFACE_WAN}:
+      dhcp4: false
+      addresses:
+        - ${WAN_IP_SERVIDOR}/${WAN_PREFIX}
+      routes:
+        - to: default
+          via: ${WAN_GATEWAY}
+      nameservers:
+        addresses: [${DNS_SERVERS}]
