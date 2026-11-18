@@ -118,7 +118,7 @@ Valores sugeridos. Os definitivos ficam em `config/lab.env` e são a **única fo
 
 | Parâmetro | Valor sugerido | Observação |
 |---|---|---|
-| Sistema operacional | Ubuntu Server 24.04 LTS | Confirmar a versão do ambiente de testes do professor e usar a mesma |
+| Sistema operacional | Ubuntu Server 26.04.1 LTS | Versão instalada nas três VMs; confirmar com o professor se o ambiente de testes exige outra versão |
 | LAN | `10.10.10.0/24`, servidor em `10.10.10.1` | Rede interna do hipervisor, sem saída direta |
 | WAN | Faixa da rede virtual com acesso à Internet | Necessária para as atualizações de segurança (R2.6); IP **estático** (R2.1) |
 | Rota estática adicional | `10.10.20.0/24` via `10.10.10.2` | Exemplo: rede de CI/deploy atrás de um roteador da LAN; demonstra roteamento estático além da rota default |
@@ -244,7 +244,8 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 - **Objetivo:** ambiente reproduzível com três máquinas: `srv-saas` (Ubuntu Server com duas interfaces), `cliente-externo` (Linux com Nmap, no lado WAN) e `estacao-admin` (lado LAN).
 - **Entregáveis:** `docs/arquitetura/laboratorio.md` com hipervisor, versão do Ubuntu, redes virtuais, recursos e passo a passo; snapshot `base-limpa` de cada VM.
 - **Aceite:** `cliente-externo` alcança a WAN do servidor; `estacao-admin` alcança a LAN; o servidor acessa a Internet pela WAN para atualizações; o console de cada VM permite recuperação caso o acesso remoto seja bloqueado.
-- **Evidências:** `ip -br addr` e `ip route` de cada máquina.
+- **Situação:** concluída em 17/11/2026; Ubuntu 26.04.1 LTS confirmado nas três VMs e snapshots `base-limpa` conferidos.
+- **Evidências:** `ip -br addr` e `ip route` de cada máquina, além de resolução DNS e `apt update` no servidor, listados em `evidencias/README.md`.
 - **Defesa:** por que duas interfaces e duas redes? Por que o servidor precisa atuar como gateway?
 
 ---
@@ -517,7 +518,7 @@ Como retomar o acesso pelo console da VM e restaurar o snapshot caso o firewall 
 
 A confirmar com o professor e registrar em `docs/decisoes.md`:
 
-- [ ] Versão do Ubuntu Server do ambiente de testes
+- [ ] Confirmar com o professor se o ambiente de testes exige versão diferente do Ubuntu 26.04.1 LTS usado nas VMs
 - [ ] Data e horário da apresentação do Grupo 7 (segundo na ordem) e se 26/11 é também o dia da apresentação
 - [ ] Como o professor quer acesso ao repositório (público ou privado com colaborador)
 - [ ] Se o código-base da apostila (script de firewall modelo) é desconsiderado na comparação do MOSS
