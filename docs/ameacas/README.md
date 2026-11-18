@@ -1,4 +1,6 @@
 # Ameaças
-Esta pasta reunirá o relatório de ameaças do projeto.
-Os vetores de ameaça serão registrados após definição pelo grupo.
-O conteúdo seguirá as decisões documentadas para o trabalho.
+
+Esta pasta reúne os documentos da Etapa 3 (R1.1):
+
+- [Relatório de ameaças](./relatorio-ameacas.md)
+- [Decisão dos vetores](./decisao-vetores.md)
