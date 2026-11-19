@@ -20,6 +20,8 @@ Registre uma linha no índice para cada evidência produzida.
 | `13-R2.1-servicos-https-wan.png` | R2.1 | `curl -I http://10.0.2.3`; `curl -k -I https://10.0.2.3`; `date` | Acesso externo ao Nginx, redirecionamento HTTP 301 para HTTPS e resposta HTTPS 200 | Tiago | 18/11/2026 UTC |
 | `14-R2.1-nmap-antes-firewall.png` | R2.1, E4 | `nmap -Pn -p 80,443,5432 10.0.2.3`; `date` | Linha de base antes do firewall: HTTP e HTTPS abertos, PostgreSQL fechado na WAN | Tiago | 18/11/2026 UTC |
 | `15-R2.1-postgresql-pg-hba.png` | R2.1 | `sudo -u postgres psql -d postgres -c "SELECT line_number, type, database, user_name, address, auth_method, error FROM pg_hba_file_rules;"`; `date` | Regra de host para `saas_demo` restrita a `10.10.10.0/24` com `scram-sha-256`; sem erro reportado | Tiago | 18/11/2026 UTC |
+| `16-R2.2-R2.3-R2.4-firewall-iptables-S.png` | R2.2, R2.3, R2.4 | `sudo iptables -S`; `sudo iptables -t nat -S`; `sudo iptables -t mangle -S` | Políticas DROP em INPUT e FORWARD, fluxo de estado, bloqueios TCP inválidos, varredura recent, limites SSH e web, serviços autorizados, encaminhamento LAN e MASQUERADE | Tiago | 19/11/2026, data não visível na captura |
+| `17-R2.2-R2.3-R2.4-firewall-status-persistencia.png` | R2.2, R2.3, R2.4 | `sudo bash scripts/firewall.sh --aplicar`; `sudo bash scripts/firewall.sh --status` | Aplicação de regras idempotente, status efetivo e persistência em `/etc/iptables/saas-firewall.rules` com permissão `600` | Tiago | 19/11/2026, data não visível na captura |
 
 As capturas 01 a 03 são preliminares e foram mantidas apenas para histórico.
 As capturas 04 a 09 mostram os comandos, o prompt com usuário e host e a data.
@@ -31,3 +33,8 @@ visível para atender integralmente à convenção de evidências.
 As capturas 12 a 15 registram os testes da Etapa 2 após a configuração
 persistente, a partir do cliente externo e no PostgreSQL. A captura 14 é a
 linha de base Nmap exigida antes do firewall.
+As capturas 16 e 17 registram o firewall após a aplicação. A captura 16
+confirma as políticas DROP, as regras de estado, de varredura, de taxa, de
+serviços, de encaminhamento e de NAT. A captura 17 confirma a execução do script
+e o arquivo persistente com permissão 600. Para atender integralmente à convenção
+de evidências, repita as duas capturas com `date` visível.

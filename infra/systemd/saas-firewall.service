@@ -1,0 +1,13 @@
+[Unit]
+Description=Restore SaaS iptables firewall rules
+DefaultDependencies=no
+Wants=network-pre.target
+Before=network-pre.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/iptables-restore /etc/iptables/saas-firewall.rules
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

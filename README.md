@@ -57,9 +57,9 @@ Cada item abaixo vem do enunciado e aponta para a etapa do plano que o atende. M
 
 **Módulo 2: Rede, firewall e hardening**
 - [x] **R2.1** IP estático nas interfaces interna (LAN) e externa (WAN) do Ubuntu Server e tabela de roteamento estático ajustada (Etapa 2)
-- [ ] **R2.2** Script `firewall.sh` com política padrão DROP em INPUT e FORWARD (Etapa 5)
-- [ ] **R2.3** Apenas as portas estritamente necessárias ao segmento liberadas (Etapa 5)
-- [ ] **R2.4** Proteção contra varredura de portas e rate limiting contra força bruta e DoS (Etapa 5)
+- [x] **R2.2** Script `firewall.sh` com política padrão DROP em INPUT e FORWARD (Etapa 5)
+- [x] **R2.3** Apenas as portas estritamente necessárias ao segmento liberadas (Etapa 5)
+- [x] **R2.4** Proteção contra varredura de portas e rate limiting contra força bruta e DoS (Etapa 5)
 - [ ] **R2.5** SSH: porta alterada, login direto de root bloqueado, `AllowUsers`, autenticação exclusiva por chave pública/privada (Etapa 6)
 - [ ] **R2.6** Sistema operacional: permissões em `/etc/` e `/var/log/`, remoção de pacotes desnecessários e atualização de segurança (Etapa 7)
 
