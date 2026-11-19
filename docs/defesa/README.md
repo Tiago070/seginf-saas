@@ -1,4 +1,6 @@
 # Defesa
-Esta pasta reunirá o roteiro da apresentação e o banco de perguntas.
-Os materiais serão preparados para a etapa de defesa.
-Informações ainda não definidas serão registradas posteriormente.
+
+Esta pasta reúne o material inicial da apresentação:
+
+- [Roteiro da apresentação](./roteiro.md)
+- [Banco de perguntas](./perguntas.md)

@@ -326,7 +326,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
   - `infra/sshd/` com a configuração e `scripts/hardening-ssh.sh` que a aplica.
   - Chaves por integrante e para o `deploy` (no repositório, no máximo as **públicas**).
   - `docs/hardening/ssh.md`: tabela **diretiva, valor, risco mitigado** para cada parâmetro.
-  - Mínimo: porta não padrão, `PermitRootLogin no`, `AllowUsers` (contas nominais e `deploy`), `PasswordAuthentication no`, `PubkeyAuthentication yes`. Complementos (`MaxAuthTries`, `LoginGraceTime`, `X11Forwarding`, `AllowTcpForwarding` e restrição do `deploy` por origem) só entram se alguém do grupo souber justificá-los.
+  - Mínimo: porta não padrão, `PermitRootLogin no`, `AllowUsers` (contas nominais e `deploy`), `PasswordAuthentication no`, `KbdInteractiveAuthentication no`, `PubkeyAuthentication yes` e `AuthenticationMethods publickey` para explicitar o uso exclusivo de chave. Complementos (`MaxAuthTries`, `LoginGraceTime`, `X11Forwarding`, `AllowTcpForwarding` e restrição adicional do `deploy` por origem) só entram se alguém do grupo souber justificá-los.
 - **Atenção (Ubuntu 24.04):** o `sshd` pode ser iniciado por socket (`ssh.socket`) e, nesse caso, ignorar a diretiva `Port`. Conferir com `ss -tlnp` em qual porta ele realmente escuta. Validar com `sshd -t` antes de reiniciar e manter a sessão atual aberta até testar em uma segunda.
 - **Aceite:** login por chave nominal funciona na nova porta; root recusado; senha recusada; usuário fora de `AllowUsers` recusado; porta 22 fechada; firewall ajustado à nova porta.
 - **Evidências:** tentativa de SSH como root bloqueada (saída do cliente e linha correspondente em `/var/log/auth.log`).
@@ -357,7 +357,6 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 - **Entregáveis:**
   - Um par de chaves por integrante.
   - Assinaturas cruzadas: cada um assina as chaves dos outros **depois de conferir a impressão digital**.
-  - Certificado de revogação de cada chave, guardado fora do repositório.
   - `gpg/chaves-publicas/` com a exportação das chaves **públicas** do grupo (E3).
   - `gpg/exemplo/` com um arquivo de configuração **fictício** (credenciais e tokens falsos), cifrado para o destinatário, e as instruções de decifragem. A transferência entre administradores usa `scp` na porta SSH já endurecida.
   - `docs/criptografia/gpg.md`: algoritmo, tamanho, expiração, justificativa.
@@ -384,20 +383,21 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 
 ---
 
-#### Etapa 10: Testes, robustez e evidências (E4)
+#### Etapa 10: Testes e evidências (E4)
 **Responsável:** todos | **Prazo:** 20 a 22/11 | **Congelamento do código: 22/11**
 
-- **Objetivo:** atacar o próprio ambiente como o professor fará e reunir as evidências obrigatórias.
+- **Objetivo:** verificar os requisitos implementados e reunir as evidências obrigatórias.
 - **Entregáveis:**
-  - `tests/` com roteiros de teste **positivo** (o que deve funcionar) e **negativo** (o que deve falhar) por requisito.
-  - Ataques simulados a partir do `cliente-externo`: varreduras Nmap (SYN, conexão completa, NULL, FIN, XMAS, detecção de versão, sem ping), SSH como root e por senha, força bruta simulada contra o SSH, acesso ao banco pela WAN, inundação de SYN controlada dentro do laboratório e ICMP.
-  - Verificação de disponibilidade durante os ataques: HTTPS responde, SSH autorizado entra, banco acessível pela LAN.
-  - Reinício completo e conferência da persistência.
-  - **Teste cruzado:** cada integrante testa o módulo de outro.
-  - **Teste do zero:** reconstruir o laboratório em VM limpa seguindo somente este README.
+  - `tests/` com verificações positivas e negativas para os requisitos implementados.
+  - Nmap antes e depois do firewall, usando a mesma linha de comando e o mesmo alvo do laboratório.
+  - Tentativa de SSH como root bloqueada, com saída do cliente e registro correspondente no servidor.
+  - Demonstração da decifragem e da assinatura do arquivo fictício GPG.
+  - Detecção de alteração controlada nos arquivos monitorados por SHA-256.
+  - Reinício do servidor e conferência da persistência do firewall, SSH e agendamento de integridade.
   - `evidencias/README.md` com o índice (seção 8).
 - **Aceite:** testes aprovados ou falhas documentadas com correção planejada; as quatro evidências de E4 existem com data, host e comando visíveis; após 22/11 só entram correções de bug, combinadas no grupo e testadas antes do commit.
-- **Defesa:** que ataque o grupo não conseguiu bloquear e por quê? O que acontece com a disponibilidade durante a limitação de taxa?
+- Não são necessários testes automatizados de força bruta, inundação de tráfego nem varreduras com flags anômalas para atender ao enunciado.
+- **Defesa:** quais controles foram comprovados pelas evidências e quais limitações permanecem?
 
 ---
 
@@ -448,7 +448,8 @@ Todos trabalham direto na `main` do mesmo repositório, cada um na sua trilha, t
 
 ## 7. Como configurar e executar
 
-*(a preencher na Etapa 12, a partir do que cada etapa registrar. O esqueleto abaixo mostra a ordem de execução; os caminhos e opções são confirmados quando os scripts existirem.)*
+Os comandos abaixo refletem os scripts disponíveis. Use os relatórios e
+evidências de cada etapa para confirmar os resultados no Ubuntu.
 
 ### 7.1 Pré-requisitos
 - Hipervisor: *(a definir na Etapa 1)*
@@ -468,17 +469,42 @@ cd <nome-do-repositório>
 1. Rede e rotas (`sudo bash scripts/aplica-rede.sh`), conforme `docs/arquitetura/rede.md`.
 2. Serviços simulados (`sudo bash scripts/instala-servicos.sh`).
 3. Evidência Nmap antes do firewall, conforme `docs/arquitetura/rede.md`; depois, criar o snapshot `pre-firewall`.
-4. Firewall (`scripts/firewall.sh`).
-5. Hardening do SSH (`scripts/hardening-ssh.sh`).
-6. Hardening do sistema operacional (`scripts/hardening-so.sh`).
-7. GPG (`gpg/`).
-8. Verificação de integridade (`scripts/verifica-integridade.sh`).
+4. Firewall: `sudo bash scripts/firewall.sh --aplicar`.
+5. SSH: conferir `USUARIOS_ADMIN` e as chaves públicas em
+   `infra/sshd/chaves-publicas/`; manter o console e uma sessão atual
+   disponíveis; executar `sudo bash scripts/hardening-ssh.sh`.
+6. Sistema operacional: gerar e revisar o relatório com
+   `sudo bash scripts/hardening-so.sh --relatorio`; aprovar somente os
+   pacotes e serviços desnecessários em `config/lab.env`; criar snapshot e
+   executar `sudo bash scripts/hardening-so.sh --aplicar`.
+7. GPG: seguir `docs/criptografia/gpg.md`. A escolha de algoritmo deve ser
+   registrada em `docs/decisoes.md` antes de gerar as chaves. Somente chaves
+   públicas são adicionadas ao repositório.
+8. Integridade: depois de persistir o firewall, executar
+   `sudo bash scripts/verifica-integridade.sh --init`,
+   `sudo bash scripts/verifica-integridade.sh --check` e
+   `sudo bash scripts/verifica-integridade.sh --instalar-agendamento`.
+9. Testes: executar os procedimentos de `tests/README.md` nas VMs indicadas
+   e registrar cada evidência em `evidencias/README.md`.
 
 ### 7.5 Verificação rápida
-Comandos de conferência por etapa (por exemplo `iptables -S`, `sshd -T`, `gpg --list-sigs`) e o resultado esperado. *(a preencher)*
+| Verificação | Comando | Resultado esperado |
+|---|---|---|
+| Firewall | `sudo iptables -S` | Políticas `DROP` em `INPUT` e `FORWARD`. |
+| SSH sintaxe | `sudo sshd -t` | Saída vazia e código zero. |
+| SSH efetivo | `sudo sshd -T` | Porta, contas permitidas e autenticação exclusiva por chave. |
+| SSH listener | `sudo ss -tlnp` | Listener na porta configurada e nenhum listener em 22. |
+| GPG | `gpg --list-sigs` | Chaves dos integrantes e assinaturas conferidas. |
+| Integridade | `sudo bash scripts/verifica-integridade.sh --check` | `OK` se não houve alteração não autorizada. |
+| Testes | `bash tests/testes-lan.sh` ou `bash tests/testes-externos.sh` | Linhas `PASS` para verificações esperadas. |
 
 ### 7.6 Recuperação
-Como retomar o acesso pelo console da VM e restaurar o snapshot caso o firewall ou o SSH bloqueie o acesso remoto. *(a preencher)*
+Mantenha o console do VirtualBox aberto ao alterar firewall ou SSH. Se o SSH
+não voltar, use o console local do `srv-saas`. Para restaurar a configuração
+SSH anterior, execute `sudo bash scripts/hardening-ssh.sh --reverter`. Esse
+modo não remove contas criadas nem restaura os arquivos `authorized_keys`.
+Se a recuperação pelo script não for suficiente, restaure o snapshot da VM
+feito antes da mudança.
 
 ---
 

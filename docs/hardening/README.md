@@ -1,4 +1,6 @@
 # Hardening
-Esta pasta reunirá a documentação de hardening do SSH e do sistema operacional.
-Os registros de antes e depois serão organizados aqui.
-O conteúdo técnico será incluído nas etapas correspondentes.
+
+Esta pasta reúne a documentação de hardening do sistema:
+
+- [Hardening do SSH](./ssh.md)
+- [Hardening do sistema operacional](./so.md)
