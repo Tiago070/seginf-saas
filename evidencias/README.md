@@ -22,6 +22,13 @@ Registre uma linha no índice para cada evidência produzida.
 | `15-R2.1-postgresql-pg-hba.png` | R2.1 | `sudo -u postgres psql -d postgres -c "SELECT line_number, type, database, user_name, address, auth_method, error FROM pg_hba_file_rules;"`; `date` | Regra de host para `saas_demo` restrita a `10.10.10.0/24` com `scram-sha-256`; sem erro reportado | Tiago | 18/11/2026 UTC |
 | `16-R2.2-R2.3-R2.4-firewall-iptables-S.png` | R2.2, R2.3, R2.4 | `sudo iptables -S`; `sudo iptables -t nat -S`; `sudo iptables -t mangle -S` | Políticas DROP em INPUT e FORWARD, fluxo de estado, bloqueios TCP inválidos, varredura recent, limites SSH e web, serviços autorizados, encaminhamento LAN e MASQUERADE | Tiago | 19/11/2026, data não visível na captura |
 | `17-R2.2-R2.3-R2.4-firewall-status-persistencia.png` | R2.2, R2.3, R2.4 | `sudo bash scripts/firewall.sh --aplicar`; `sudo bash scripts/firewall.sh --status` | Aplicação de regras idempotente, status efetivo e persistência em `/etc/iptables/saas-firewall.rules` com permissão `600` | Tiago | 19/11/2026, data não visível na captura |
+| `18-R2.6-pre-reaplicacao-final.txt` | R2.6 | `sudo bash scripts/hardening-so.sh --aplicar` | Estado imediatamente anterior à reaplicação final, após atualização do kernel; inventário de portas, serviços, pacotes, permissões e atualizações | Tiago | 20/11/2026 UTC |
+| `19-R2.6-depois-hardening-so.txt` | R2.6 | `sudo bash scripts/hardening-so.sh --aplicar` | Relatório após a reaplicação final, com permissões verificadas e sem atualizações listadas | Tiago | 20/11/2026 UTC |
+| `20-R2.6-inventario-inicial.txt` | R2.6 | `sudo bash scripts/hardening-so.sh --relatorio` | Linha de base anterior à primeira aplicação, com `open-iscsi.service` habilitado, permissões iniciais e atualizações pendentes | Tiago | 20/11/2026 UTC |
+| `21-R3.1-E3-E4-GPG.png` | R3.1, E3, E4 | `gpg --armor --output .\gpg\chaves-publicas\grupo7-publicas.asc --export-options export-local-sigs --export tiago luanna felipe`; `gpg --encrypt`; `gpg --decrypt` | Exportação pública do grupo, cifragem e decifragem do arquivo fictício | Tiago e Luanna | 20/11/2026 |
+| `22-R3.1-assinaturas-GPG.txt` | R3.1, E3 | `gpg --list-sigs`; `gpg --check-sigs` | Três chaves públicas, cada uma com assinatura de outro integrante; nove assinaturas válidas | Tiago | 20/11/2026 |
+| `gpg/chaves-publicas/grupo7-publicas.asc` | E3 | `gpg --armor --output .\gpg\chaves-publicas\grupo7-publicas.asc --export` | Exportação combinada das chaves públicas do grupo | Tiago | 20/11/2026 |
+| `gpg/exemplo/credenciais-exemplo.env.gpg` | R3.1, E4 | `gpg --encrypt --recipient luanna .\gpg\exemplo\credenciais-exemplo.env` | Arquivo de exemplo cifrado para a Luanna, que o decifrou com a própria chave | Tiago e Luanna | 20/11/2026 |
 
 As capturas 01 a 03 são preliminares e foram mantidas apenas para histórico.
 As capturas 04 a 09 mostram os comandos, o prompt com usuário e host e a data.
@@ -38,3 +45,10 @@ confirma as políticas DROP, as regras de estado, de varredura, de taxa, de
 serviços, de encaminhamento e de NAT. A captura 17 confirma a execução do script
 e o arquivo persistente com permissão 600. Para atender integralmente à convenção
 de evidências, repita as duas capturas com `date` visível.
+O relatório 20 é a linha de base anterior à primeira aplicação do hardening do
+SO. Os relatórios 18 e 19 foram gerados antes e depois de uma reaplicação
+idempotente, após a instalação do kernel `7.0.0-44`; o relatório 18 não
+substitui a linha de base inicial. O relatório 19 não lista pacotes atualizáveis.
+As saídas pós-reinicialização de `uname -r`, `systemctl --failed` e
+`systemctl is-enabled open-iscsi.service` foram confirmadas no console, mas não
+foram salvas como capturas.

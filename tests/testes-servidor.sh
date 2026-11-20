@@ -93,7 +93,7 @@ politica_drop() {
 sem_atualizacoes() {
     local simulacao
     simulacao="$(LC_ALL=C apt-get -s upgrade)" || return 1
-    ! grep -q '^Inst ' <<< "${simulacao}"
+    ! grep -qE '^Inst |^The following packages have been kept back:' <<< "${simulacao}"
 }
 nenhuma_unidade_falhou() {
     local unidades

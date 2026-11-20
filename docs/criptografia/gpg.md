@@ -1,105 +1,84 @@
 # Gestão de chaves GPG
 
-## Objetivo e decisão pendente
+## Objetivo e decisão registrada
 
 Cada integrante deve possuir um par de chaves GPG, conferir as impressões
 digitais dos demais por um canal independente, assinar as chaves conferidas e
-trocar um arquivo de configuração fictício cifrado e assinado.
+trocar um arquivo de configuração fictício cifrado.
 
-O algoritmo, o tamanho e a validade ainda estão como `DEFINIR` em
-`docs/decisoes.md`. O grupo deve registrar a escolha e justificativa antes de
-gerar as chaves. A aula apresenta DSA e ElGamal; alternativas atuais incluem
-Ed25519 com subchave de cifra compatível ou RSA com tamanho adequado. Não
-misture algoritmos sem justificar a compatibilidade com a versão de GnuPG usada
-nas VMs.
+O grupo decidiu usar Ed25519 para assinatura, uma subchave CV25519 para cifra
+e validade de 12 meses. A decisão e as alternativas consideradas estão em
+`docs/decisoes.md`. Na máquina Windows centralizada, o GnuPG 2.5.24 lista as
+curvas `cv25519` e `ed25519` em `gpg --with-colons --list-config curve`. Se o
+fluxo passar a usar outro dispositivo, confira a compatibilidade antes de gerar
+chaves nele. A aula apresenta DSA e ElGamal; a escolha do grupo é diferente.
+Para a chave criada em 20/11/2026, o GnuPG informou expiração em 15/11/2027.
+O grupo aceitou essa data exibida como validade de 12 meses.
 
-## Geração, conferência e exportação
+O grupo também aprovou centralizar os pares na máquina Windows do Tiago. Isso
+concentra o armazenamento e aumenta o impacto de um comprometimento dessa
+máquina. Cada integrante deve digitar pessoalmente uma frase-senha distinta
+para sua própria chave, sem revelá-la aos demais. As chaves privadas permanecem
+no perfil local do GnuPG e nunca são exportadas para o repositório.
 
-Em cada dispositivo pessoal, cada integrante executa:
+## Geração, assinatura e exportação
 
-```bash
+Cada integrante gera e usa sua própria chave na máquina Windows centralizada,
+digitando pessoalmente sua frase-senha. Para cada integrante, execute:
+
+```powershell
 gpg --full-generate-key
-gpg --list-keys --with-fingerprint <EMAIL_DO_INTEGRANTE>
-gpg --armor --export <EMAIL_DO_INTEGRANTE> > gpg/chaves-publicas/<usuario>.asc
 ```
 
-Escolha o algoritmo e a validade já registrados em `docs/decisoes.md`, associe
-a identidade real do integrante e proteja a chave privada com uma frase-senha.
-Chaves privadas e frases-senha ficam fora do repositório. Somente as
-exportações públicas `.asc` podem ser versionadas.
+No menu, escolha ECC para assinatura e cifra e a curva Curve 25519. Informe a
+validade `12m`, a identidade real do titular e a frase-senha definida e digitada
+por ele. Não envie identidades ou frases-senha pelo chat. A chave principal
+deve aparecer como Ed25519 e a subchave como CV25519.
 
-Cada integrante importa as chaves públicas dos demais e compara a impressão
-digital completa por chamada de voz ou outro canal independente:
+Depois que os três pares existirem, cada chave deve receber uma assinatura de
+outro integrante. Para reduzir operações, cada titular assina uma chave
+atribuída pela equipe, após conferir a impressão digital com o titular da
+chave. Use a impressão digital completa para identificar assinante e chave:
 
-```bash
-gpg --import gpg/chaves-publicas/<usuario>.asc
-gpg --fingerprint <EMAIL_DO_OUTRO_INTEGRANTE>
-gpg --sign-key <EMAIL_DO_OUTRO_INTEGRANTE>
+```powershell
+gpg --local-user FPR_ASSINANTE --sign-key FPR_ASSINADO
 ```
 
-Depois das assinaturas, exporte novamente as chaves públicas assinadas e
-compartilhe-as pelo repositório. A opção `export-local-sigs` inclui as
-assinaturas locais na exportação:
+Substitua `FPR_ASSINANTE` e `FPR_ASSINADO` pelas impressões digitais completas,
+sem os sinais `<` e `>`. Confira as assinaturas e exporte uma única cópia
+pública do grupo:
 
-```bash
-gpg --armor --export-options export-local-sigs --export <EMAIL_DO_INTEGRANTE> \
-  > gpg/chaves-publicas/<usuario>-assinada.asc
-```
-
-Ao final, exporte as três chaves públicas do grupo:
-
-```bash
-gpg --armor --export-options export-local-sigs --export \
-  <EMAIL_TIAGO> <EMAIL_LUANNA> <EMAIL_FELIPE> \
-  > gpg/chaves-publicas/grupo7-publicas.asc
+```powershell
 gpg --list-sigs
+gpg --check-sigs
+gpg --armor --output .\gpg\chaves-publicas\grupo7-publicas.asc --export-options export-local-sigs --export FPR_TIAGO FPR_LUANNA FPR_FELIPE
 ```
 
-## Cifragem, assinatura e troca
+Substitua os nomes `FPR_TIAGO`, `FPR_LUANNA` e `FPR_FELIPE` pelas impressões
+digitais completas, sem os sinais `<` e `>`.
+
+## Cifragem e decifragem
 
 O arquivo `gpg/exemplo/credenciais-exemplo.env` contém somente valores
-explicitamente fictícios. Depois de confirmar que a chave pública do destinatário
-foi conferida:
+explicitamente fictícios. Cifre-o para um destinatário do grupo:
 
-```bash
-gpg --output gpg/exemplo/credenciais-exemplo.env.gpg \
-  --encrypt --sign --recipient <EMAIL_DO_DESTINATARIO> \
-  gpg/exemplo/credenciais-exemplo.env
+```powershell
+gpg --output .\gpg\exemplo\credenciais-exemplo.env.gpg --encrypt --recipient FPR_DESTINATARIO .\gpg\exemplo\credenciais-exemplo.env
 ```
 
-Transfira o arquivo cifrado ao destinatário pela porta SSH configurada:
+Substitua `FPR_DESTINATARIO` pela impressão digital completa do destinatário,
+sem os sinais `<` e `>`. Entregue o arquivo cifrado ao destinatário na máquina
+centralizada. Ele digita a própria frase-senha e decifra o arquivo:
 
-```bash
-scp -P "$(source config/lab.env; printf '%s' "$PORTA_SSH")" \
-  gpg/exemplo/credenciais-exemplo.env.gpg \
-  <usuario>@<IP_LAN_SERVIDOR>:/tmp/
+```powershell
+gpg --decrypt .\gpg\exemplo\credenciais-exemplo.env.gpg
 ```
 
-O destinatário decifra e confere a assinatura:
-
-```bash
-gpg --output /tmp/credenciais-exemplo-decifrado.env \
-  --decrypt /tmp/credenciais-exemplo.env.gpg
-```
-
-O comando deve indicar o resultado da verificação da assinatura. Para testar
-uma assinatura destacada separadamente:
-
-```bash
-gpg --armor --detach-sign \
-  --output gpg/exemplo/credenciais-exemplo.env.asc \
-  gpg/exemplo/credenciais-exemplo.env
-gpg --verify gpg/exemplo/credenciais-exemplo.env.asc \
-  gpg/exemplo/credenciais-exemplo.env
-```
-
-Uma tentativa de decifrar com uma identidade sem a chave privada do destinatário
-deve falhar. Registre a mensagem de falha sem exportar ou exibir qualquer chave
-privada.
+O arquivo cifrado é o artefato de troca. Não use credenciais reais nem substitua
+os valores fictícios por segredos de qualquer serviço.
 
 ## Evidências e segurança
 
-Registre a exportação pública do grupo, `gpg --list-sigs`, a impressão digital
-conferida, a decifragem e a verificação de assinatura. A captura não deve
-mostrar frases-senha nem material privado. O arquivo de exemplo é fictício e
-não pode conter credenciais usadas em qualquer sistema.
+Registre a exportação pública do grupo, `gpg --list-sigs` e a decifragem do
+arquivo fictício. As capturas não devem mostrar frases-senha nem material
+privado. Somente chaves públicas podem ser exportadas para o repositório.

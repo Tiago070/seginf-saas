@@ -217,7 +217,7 @@ if ! simulacao_atualizacoes="$(LC_ALL=C apt-get -s upgrade)"; then
     printf 'ERRO: não foi possível verificar atualizações pendentes.\n' >&2
     exit 1
 fi
-if grep -q '^Inst ' <<< "${simulacao_atualizacoes}"; then
+if grep -qE '^Inst |^The following packages have been kept back:' <<< "${simulacao_atualizacoes}"; then
     printf 'ERRO: ainda há atualizações disponíveis; confira o relatório depois.\n' >&2
     exit 1
 fi

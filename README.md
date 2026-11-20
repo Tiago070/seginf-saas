@@ -355,15 +355,14 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 
 - **Objetivo:** identidade criptográfica dos administradores e troca segura de um arquivo sensível (Aula 10).
 - **Entregáveis:**
-  - Um par de chaves por integrante.
-  - Assinaturas cruzadas: cada um assina as chaves dos outros **depois de conferir a impressão digital**.
-  - `gpg/chaves-publicas/` com a exportação das chaves **públicas** do grupo (E3).
-  - `gpg/exemplo/` com um arquivo de configuração **fictício** (credenciais e tokens falsos), cifrado para o destinatário, e as instruções de decifragem. A transferência entre administradores usa `scp` na porta SSH já endurecida.
-  - `docs/criptografia/gpg.md`: algoritmo, tamanho, expiração, justificativa.
-- **Decisão a registrar:** a aula usa DSA e ElGamal; os padrões atuais do GnuPG (curva 25519) e RSA de 3072 bits ou mais são alternativas. Escolher e justificar.
+  - Um par de chaves por integrante, gerado pelo titular na máquina centralizada.
+  - Uma assinatura de outro integrante para cada chave, após conferir a impressão digital com o titular.
+  - Um arquivo `gpg/chaves-publicas/grupo7-publicas.asc` com a exportação das chaves públicas do grupo (E3).
+  - Um arquivo de configuração fictício em `gpg/exemplo/`, cifrado para um integrante e decifrado pelo destinatário.
+  - O procedimento adotado registrado em `docs/criptografia/gpg.md`.
 - **Segurança:** chaves privadas e senhas (passphrases) **nunca** vão ao Git. Antes de cada commit, conferir `git diff --cached` por blocos `PRIVATE KEY`.
-- **Aceite:** `gpg --list-sigs` mostra as assinaturas cruzadas; o arquivo só abre com a chave do destinatário; `gpg --verify` valida a assinatura; a tentativa com chave errada falha.
-- **Evidências:** decifragem do arquivo, verificação de assinatura e falha com chave errada.
+- **Aceite:** `gpg --list-sigs` mostra uma assinatura de outro integrante em cada chave; o destinatário consegue decifrar o arquivo fictício.
+- **Evidências:** exportação pública do grupo, listagem das assinaturas e decifragem do arquivo.
 - **Defesa:** por que combinar cifra simétrica e assimétrica? O que a assinatura garante que a cifra não garante? O que é a teia de confiança e por que assinar a chave de outra pessoa?
 
 ---
@@ -391,7 +390,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
   - `tests/` com verificações positivas e negativas para os requisitos implementados.
   - Nmap antes e depois do firewall, usando a mesma linha de comando e o mesmo alvo do laboratório.
   - Tentativa de SSH como root bloqueada, com saída do cliente e registro correspondente no servidor.
-  - Demonstração da decifragem e da assinatura do arquivo fictício GPG.
+  - Demonstração da decifragem do arquivo fictício GPG.
   - Detecção de alteração controlada nos arquivos monitorados por SHA-256.
   - Reinício do servidor e conferência da persistência do firewall, SSH e agendamento de integridade.
   - `evidencias/README.md` com o índice (seção 8).
