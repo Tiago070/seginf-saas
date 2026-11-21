@@ -141,9 +141,10 @@ As aprovações, relatórios e técnicas avaliadas estão em
 O requisito exige um par GPG por integrante, assinaturas cruzadas após
 conferência de impressão digital e troca cifrada de um arquivo fictício.
 
-O procedimento está em [gpg.md](../criptografia/gpg.md). Algoritmo, tamanho,
-validade e endereços dos integrantes ainda dependem da decisão humana e não
-devem ser presumidos.
+O procedimento está em [gpg.md](../criptografia/gpg.md). O grupo usa Ed25519
+para assinatura, subchave CV25519 para cifra e validade de 12 meses. As
+impressões digitais foram conferidas e cada chave recebeu uma assinatura de
+outro integrante.
 
 Somente chaves públicas podem ser versionadas. Chaves privadas e frases-senha
 devem permanecer nos dispositivos dos integrantes.
@@ -182,11 +183,10 @@ A convenção e o índice estão em [evidencias/README.md](../../evidencias/READ
 ## 13. Conclusão
 
 Os scripts e documentos existentes formam a base técnica do trabalho. A
-conclusão depende da aplicação nas VMs, da decisão e execução das chaves GPG,
-da revisão do hardening do SO e da coleta das quatro evidências com data, host
-e comando visíveis.
-
-Nenhum requisito deve ser marcado como concluído antes dessa validação real.
+aplicação foi validada nas VMs para rede, firewall, SSH, hardening do sistema,
+GPG e integridade. As evidências incluem resultados antes e depois do firewall,
+bloqueio de root, troca criptográfica do arquivo fictício e alterações
+controladas detectadas pelo SHA-256.
 
 ## Referências
 

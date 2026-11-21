@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Nome: instala-servicos.sh
 # Finalidade: Instalar Nginx e PostgreSQL com HTTPS e acesso ao banco restrito à LAN.
-# Autor: DEFINIR
 # Data: 18/11/2026
 # Requisitos: Bash, Ubuntu Server, acesso ao config/lab.env e à Internet pela WAN.
 # Uso: sudo bash scripts/instala-servicos.sh

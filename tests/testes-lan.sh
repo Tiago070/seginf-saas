@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Nome: testes-lan.sh
 # Finalidade: Verificar SSH nominal e acesso ao PostgreSQL pela LAN.
-# Autor: DEFINIR
 # Data: 19/11/2026
 # Requisitos: Bash, OpenSSH client, netcat e config/lab.env.
 # Uso: bash tests/testes-lan.sh

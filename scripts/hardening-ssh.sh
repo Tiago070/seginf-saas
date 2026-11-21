@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Nome: hardening-ssh.sh
 # Finalidade: Instalar contas, chaves públicas e configuração segura do OpenSSH.
-# Autor: DEFINIR
 # Data: 19/11/2026
 # Requisitos: Bash, Ubuntu Server, OpenSSH, ssh-keygen, envsubst e acesso root.
 # Uso: sudo bash scripts/hardening-ssh.sh [--reverter]

@@ -120,7 +120,7 @@ flowchart LR
     end
     subgraph CI["Zona roteada, lan-ci, Rede Interna 10.10.20.0/24"]
         ADMIN_CI["estacao-admin, interface de roteamento<br/>enp0s8<br/>10.10.20.1"]
-        DESTINO["Host de destino<br/>DEFINIR"]
+        DESTINO["Interface validada<br/>10.10.20.1 (sem host dedicado)"]
     end
     SSH["SSH PORTA_SSH<br/>parâmetro planejado; configuração na Etapa 6"]
 
@@ -151,8 +151,9 @@ do servidor. As portas e seu escopo nesta etapa são:
 
 As portas de Nginx são configuradas sem endereço de bind específico e podem
 responder pelas interfaces WAN e LAN enquanto não houver firewall. PostgreSQL
-fica vinculado somente ao endereço LAN. Ainda não há host configurado em
-`lan-ci`, por isso o endereço do destino está marcado como `DEFINIR`.
+fica vinculado somente ao endereço LAN. Não há host dedicado conectado a
+`lan-ci`; a conectividade validada alcança a interface `10.10.20.1` do
+roteador.
 
 ## Execução e testes passo a passo
 

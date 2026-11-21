@@ -229,20 +229,20 @@ mesmo quando o controle não detectar a ação imediatamente.
 
 | Diretriz | Controle técnico ou procedimento | Arquivo do repositório | Situação |
 |---|---|---|---|
-| PSI-AC-01, PSI-AC-02, PSI-AC-12 | Contas nominais e conta de deploy com privilégio mínimo | [PREENCHER após Etapas 4 e 6]: `infra/sshd/`, configuração efetiva e política de contas | Pendente |
-| PSI-AC-03, PSI-AC-08, PSI-AC-09, PSI-AC-10 | Bloqueio de root, chave pública, `AllowUsers` e porta de SSH definida | [PREENCHER após Etapa 6]: configuração do `sshd_config` | Pendente |
-| PSI-AC-05, PSI-AC-06, PSI-AC-07 | Restrição de dados por tenant e princípio de privilégio mínimo | [PREENCHER após Etapas 4 e 6]: procedimento e controle aplicado no banco | Pendente |
-| PSI-AC-11 | Rate limiting de novas conexões SSH | [PREENCHER após Etapa 5]: `scripts/firewall.sh` e regras persistentes | Pendente |
-| PSI-AC-13, PSI-AC-14, PSI-AC-15 | Gestão de chaves SSH e GPG, revogação e troca segura | [PREENCHER após Etapa 8]: `gpg/chaves-publicas/` e `gpg/exemplo/` | Pendente |
-| PSI-AC-16, PSI-AC-17 | Revisão periódica de contas, chaves e autorizações | [PREENCHER após Etapa 4]: procedimento desta PSI | Pendente nesta etapa; revisão operacional futura |
-| PSI-AU-01, PSI-AU-02 | Registro de autenticação e origem das operações | [PREENCHER após Etapas 6 e 7]: configuração de SSH e auditoria do sistema | Pendente |
-| PSI-AU-03, PSI-AU-04 | Retenção, proteção e revisão dos registros | [PREENCHER após Etapa 7]: configuração de logs e permissões | Pendente |
-| PSI-AU-05, PSI-AU-06, PSI-AU-07 | Verificação SHA-256 e resposta a alteração | [PREENCHER após Etapa 9]: `scripts/verifica-integridade.sh` e baseline | Pendente |
-| PSI-AU-08, PSI-AU-09 | Revisão periódica e tratamento seguro de evidências | [PREENCHER após Etapas 7 e 10]: procedimento e `evidencias/README.md` | Pendente |
+| PSI-AC-01, PSI-AC-02, PSI-AC-12 | Contas nominais e conta de deploy com privilégio mínimo | `scripts/hardening-ssh.sh`, `infra/sshd/00-saas-hardening.conf.tmpl` e `config/lab.env` | Implementado |
+| PSI-AC-03, PSI-AC-08, PSI-AC-09, PSI-AC-10 | Bloqueio de root, chave pública, `AllowUsers` e porta de SSH definida | `infra/sshd/00-saas-hardening.conf.tmpl`; evidências 30, 31 e 33 | Implementado |
+| PSI-AC-05, PSI-AC-06, PSI-AC-07 | Restrição de dados por tenant e princípio de privilégio mínimo | `scripts/instala-servicos.sh`, regra SCRAM no PostgreSQL e segregação operacional da PSI | Implementado documental e tecnicamente |
+| PSI-AC-11 | Rate limiting de novas conexões SSH | `scripts/firewall.sh` e regras persistentes em `/etc/iptables/saas-firewall.rules` | Implementado |
+| PSI-AC-13, PSI-AC-14, PSI-AC-15 | Gestão de chaves SSH e GPG, revogação e troca segura | `infra/sshd/chaves-publicas/`, `gpg/chaves-publicas/` e `docs/criptografia/gpg.md` | Implementado |
+| PSI-AC-16, PSI-AC-17 | Revisão periódica de contas, chaves e autorizações | Procedimento desta PSI e evidências 31 e 33 | Revisão operacional periódica requerida |
+| PSI-AU-01, PSI-AU-02 | Registro de autenticação e origem das operações | Configuração SSH, `/var/log/auth.log` e evidência 31 | Implementado |
+| PSI-AU-03, PSI-AU-04 | Retenção, proteção e revisão dos registros | Logs do SSH e da integridade com permissões documentadas | Implementado |
+| PSI-AU-05, PSI-AU-06, PSI-AU-07 | Verificação SHA-256 e resposta a alteração | `scripts/verifica-integridade.sh`, evidências 23 a 29 | Implementado |
+| PSI-AU-08, PSI-AU-09 | Revisão periódica e tratamento seguro de evidências | `evidencias/README.md` e procedimentos documentados | Implementado |
 | PSI-UA-01, PSI-UA-02 | Uso restrito do ambiente e proibição de testes não autorizados | Este capítulo da PSI | Implementado documentalmente |
-| PSI-UA-03, PSI-UA-04, PSI-UA-07 | Proteção de credenciais e dispositivos autorizados | [PREENCHER após Etapa 8]: procedimento de GPG e gestão de dispositivos | Pendente |
-| PSI-UA-05 | Políticas e controles não devem ser desativados | [PREENCHER após Etapas 5, 6, 7 e 9]: scripts e configurações persistentes | Pendente |
-| PSI-UA-06, PSI-UA-08 | Procedimentos de mudança, resposta e comunicação | [PREENCHER após Etapa 10]: testes e procedimento de incidente | Pendente |
+| PSI-UA-03, PSI-UA-04, PSI-UA-07 | Proteção de credenciais e dispositivos autorizados | `docs/criptografia/gpg.md` e exclusão de material privado do Git | Implementado |
+| PSI-UA-05 | Políticas e controles não devem ser desativados | Scripts persistentes de firewall, SSH, SO e integridade | Implementado |
+| PSI-UA-06, PSI-UA-08 | Procedimentos de mudança, resposta e comunicação | Procedimentos de baseline e restauração documentados nas evidências 23 a 29 | Implementado |
 | PSI-CS-01, PSI-CS-02, PSI-CS-03 | Registro de desvios e aplicação de sanções | Este capítulo da PSI | Implementado documentalmente |
 | Restrição do PostgreSQL à LAN | Bind no endereço LAN e regra SCRAM-SHA-256 | `scripts/instala-servicos.sh`; `config/lab.env` | Implementado no laboratório |
 | Evidência da restrição do PostgreSQL | Arquivo `pg_hba.conf` confirmado pelo laboratório | `evidencias/15-R2.1-postgresql-pg-hba.png` | Evidência disponível |

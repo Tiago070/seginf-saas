@@ -52,31 +52,31 @@ Cada item abaixo vem do enunciado e aponta para a etapa do plano que o atende. M
 ### 2.1 Requisitos técnicos
 
 **Módulo 1: Fundamentos e alinhamento estratégico**
-- [ ] **R1.1** Relatório de Ameaças: 2 vetores de ataque específicos do segmento SaaS, com base nas diretrizes do NIC.br e no Relatório Global de Ameaças CrowdStrike 2026, com medidas preventivas fundamentadas (Etapa 3)
-- [ ] **R1.2** Capítulo da PSI cobrindo controle de acesso, auditoria e uso aceitável, coerente com o cenário (Etapa 4)
+- [x] **R1.1** Relatório de Ameaças: 2 vetores de ataque específicos do segmento SaaS, com base nas diretrizes do NIC.br e no Relatório Global de Ameaças CrowdStrike 2026, com medidas preventivas fundamentadas (Etapa 3)
+- [x] **R1.2** Capítulo da PSI cobrindo controle de acesso, auditoria e uso aceitável, coerente com o cenário (Etapa 4)
 
 **Módulo 2: Rede, firewall e hardening**
 - [x] **R2.1** IP estático nas interfaces interna (LAN) e externa (WAN) do Ubuntu Server e tabela de roteamento estático ajustada (Etapa 2)
 - [x] **R2.2** Script `firewall.sh` com política padrão DROP em INPUT e FORWARD (Etapa 5)
 - [x] **R2.3** Apenas as portas estritamente necessárias ao segmento liberadas (Etapa 5)
 - [x] **R2.4** Proteção contra varredura de portas e rate limiting contra força bruta e DoS (Etapa 5)
-- [ ] **R2.5** SSH: porta alterada, login direto de root bloqueado, `AllowUsers`, autenticação exclusiva por chave pública/privada (Etapa 6)
-- [ ] **R2.6** Sistema operacional: permissões em `/etc/` e `/var/log/`, remoção de pacotes desnecessários e atualização de segurança (Etapa 7)
+- [x] **R2.5** SSH: porta alterada, login direto de root bloqueado, `AllowUsers`, autenticação exclusiva por chave pública/privada (Etapa 6)
+- [x] **R2.6** Sistema operacional: permissões em `/etc/` e `/var/log/`, remoção de pacotes desnecessários e atualização de segurança (Etapa 7)
 
 **Módulo 3: Comunicação segura e auditabilidade**
-- [ ] **R3.1** Chaves GPG geradas e assinadas para a equipe de administradores, com troca criptografada de um arquivo de configuração sensível (credenciais ou tokens de API) (Etapa 8)
-- [ ] **R3.2** Script que calcula e valida periodicamente o SHA-256 de `/etc/passwd`, `/etc/shadow` e das regras salvas do iptables, com alerta visual ou em log em caso de alteração (Etapa 9)
+- [x] **R3.1** Chaves GPG geradas e assinadas para a equipe de administradores, com troca criptografada de um arquivo de configuração sensível (credenciais ou tokens de API) (Etapa 8)
+- [x] **R3.2** Script que calcula e valida periodicamente o SHA-256 de `/etc/passwd`, `/etc/shadow` e das regras salvas do iptables, com alerta visual ou em log em caso de alteração (Etapa 9)
 
 ### 2.2 Entregáveis
 
 - [ ] **E1** Relatório Técnico Unificado em **PDF**: justificativa da arquitetura baseada no segmento e na literatura da disciplina, diagrama detalhado da topologia, explicação técnica de **cada** regra de iptables e de **cada** parâmetro do `sshd_config` (Etapa 11)
-- [ ] **E2** Scripts funcionais: `firewall.sh` e script de verificação de integridade SHA-256 (Etapas 5 e 9)
-- [ ] **E3** Arquivo de exportação da chave pública GPG do grupo (Etapa 8)
-- [ ] **E4** Evidências de teste, com capturas de tela e logs (Etapa 10):
-  - [ ] Nmap **antes** e **depois** do firewall
-  - [ ] Tentativa de SSH como root bloqueada
-  - [ ] Decifragem do arquivo GPG
-  - [ ] Detecção automática de alteração via SHA-256
+- [x] **E2** Scripts funcionais: `firewall.sh` e script de verificação de integridade SHA-256 (Etapas 5 e 9)
+- [x] **E3** Arquivo de exportação da chave pública GPG do grupo (Etapa 8)
+- [x] **E4** Evidências de teste, com capturas de tela e logs (Etapa 10):
+  - [x] Nmap **antes** e **depois** do firewall
+  - [x] Tentativa de SSH como root bloqueada
+  - [x] Decifragem do arquivo GPG
+  - [x] Detecção automática de alteração via SHA-256
 
 ### 2.3 Critérios de avaliação que moldam o plano
 
@@ -160,8 +160,6 @@ Base do firewall (Etapa 5). Tudo que não está na tabela fica bloqueado.
 |-- config/
 |   +-- lab.env                  # IPs, portas, usuários (sem segredos)
 |-- docs/
-|   |-- equipe.md                # integrantes, trilhas e responsabilidades
-|   |-- guia-de-estilo.md        # padrão de comentários e de commits
 |   |-- decisoes.md              # registro de decisões e justificativas
 |   |-- arquitetura/             # diagramas e descrição do laboratório e da rede
 |   |-- ameacas/                 # relatório de ameaças
@@ -222,7 +220,7 @@ Cada integrante é responsável por uma trilha e testa o que produz na própria 
 | **B** | Luanna | Acesso, hardening e PSI | 4, 6, 7 | C e A |
 | **C** | Felipe | Criptografia, integridade e relatório | 8, 9, 11 | A e B |
 
-As etapas 0, 10, 12 e 13 são de **todos**. O registro das trilhas fica em `docs/equipe.md`.
+As etapas 0, 10, 12 e 13 são de **todos**. O registro das trilhas foi mantido no alinhamento inicial e removido na revisão final do repositório.
 
 ### 5.3 Etapas
 
@@ -234,8 +232,8 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 **Responsável:** todos | **Prazo:** 16/11
 
 - **Objetivo:** base do projeto pronta para os três trabalharem sem conflito.
-- **Entregáveis:** repositório criado; estrutura de pastas da seção 4; `.gitignore`; `config/lab.env` (modelo); `docs/guia-de-estilo.md` (cabeçalho padrão de script, comentários em português, nomes de variáveis, formato de commit); `docs/equipe.md` com os integrantes e as trilhas (A: Tiago, B: Luanna, C: Felipe).
-- **Aceite:** cada integrante clonou o repositório, preencheu o próprio bloco em `docs/equipe.md` e fez commit e push; o `git log` mostra os três autores com o e-mail vinculado ao GitHub.
+- **Entregáveis:** repositório criado; estrutura de pastas da seção 4; `.gitignore` e `config/lab.env` (modelo). Os documentos de alinhamento inicial (`docs/guia-de-estilo.md` e `docs/equipe.md`) foram removidos na revisão final.
+- **Aceite:** cada integrante clonou o repositório, contribuiu no alinhamento inicial e fez commit e push; o `git log` registra os autores com o e-mail vinculado ao GitHub.
 - **Defesa:** como o grupo dividiu o trabalho e confere as entregas? Onde ficam registradas as decisões?
 
 ---
@@ -327,7 +325,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
   - Chaves por integrante e para o `deploy` (no repositório, no máximo as **públicas**).
   - `docs/hardening/ssh.md`: tabela **diretiva, valor, risco mitigado** para cada parâmetro.
   - Mínimo: porta não padrão, `PermitRootLogin no`, `AllowUsers` (contas nominais e `deploy`), `PasswordAuthentication no`, `KbdInteractiveAuthentication no`, `PubkeyAuthentication yes` e `AuthenticationMethods publickey` para explicitar o uso exclusivo de chave. Complementos (`MaxAuthTries`, `LoginGraceTime`, `X11Forwarding`, `AllowTcpForwarding` e restrição adicional do `deploy` por origem) só entram se alguém do grupo souber justificá-los.
-- **Atenção (Ubuntu 24.04):** o `sshd` pode ser iniciado por socket (`ssh.socket`) e, nesse caso, ignorar a diretiva `Port`. Conferir com `ss -tlnp` em qual porta ele realmente escuta. Validar com `sshd -t` antes de reiniciar e manter a sessão atual aberta até testar em uma segunda.
+- **Atenção (Ubuntu 24.04):** o `sshd` pode ser iniciado por socket (`ssh.socket`) e, nesse caso, ignorar a diretiva `Port`. Conferir com `ss -tlnp` em qual porta ele realmente escuta. Validar com `sshd -t` antes de reiniciar e manter a sessão atual aberta até testar pela estação administrativa ou pelo console.
 - **Aceite:** login por chave nominal funciona na nova porta; root recusado; senha recusada; usuário fora de `AllowUsers` recusado; porta 22 fechada; firewall ajustado à nova porta.
 - **Evidências:** tentativa de SSH como root bloqueada (saída do cliente e linha correspondente em `/var/log/auth.log`).
 - **Defesa:** mudar a porta é um controle de segurança? Por que chave e não senha? O que `AllowUsers` faz que o firewall não faz?
@@ -417,7 +415,7 @@ Cada etapa tem **entregáveis**, **critério de aceite** (a etapa só fecha se t
 - **Objetivo:** repositório profissional e limpo, com código inequivocamente do grupo.
 - **Entregáveis:** README final (seção 7 completa); comentários no padrão do guia de estilo em todos os scripts; `shellcheck` aprovado; remoção de código morto e de arquivos temporários; varredura de segredos no histórico; tag `v1.0-entrega`.
 - **Autoria e similaridade:** todo trecho derivado da apostila ou de material público deve ter sido reescrito, comentado com a lógica do grupo e ter a fonte citada no cabeçalho do script. Nomes, estrutura e comentários refletem o cenário SaaS do Grupo 7.
-- **Aceite:** um clone novo, seguindo só o README, resulta em laboratório funcional; ninguém do grupo encontra trecho que não saiba explicar.
+- **Aceite:** todos conseguem explicar o próprio módulo e o funcionamento geral do laboratório já instalado; nenhum integrante depende de consulta para demonstrar seu papel.
 
 ---
 
@@ -451,8 +449,8 @@ Os comandos abaixo refletem os scripts disponíveis. Use os relatórios e
 evidências de cada etapa para confirmar os resultados no Ubuntu.
 
 ### 7.1 Pré-requisitos
-- Hipervisor: *(a definir na Etapa 1)*
-- Imagem: Ubuntu Server *(versão definida na Etapa 1)*
+- Hipervisor: VirtualBox
+- Imagem: Ubuntu Server 26.04.1 LTS
 - Máquinas: `srv-saas`, `cliente-externo`, `estacao-admin`
 
 ### 7.2 Criar o laboratório
@@ -515,7 +513,7 @@ feito antes da mudança.
 
 | Arquivo | Requisito | Comando | O que prova | Quem executou | Data |
 |---|---|---|---|---|---|
-| *(a preencher)* | | | | | |
+| Ver índice completo em [evidencias/README.md](evidencias/README.md) |  |  |  |  |  |
 
 **Obrigatórias (E4):**
 1. Nmap **antes** do firewall (Etapa 2) e **depois** (Etapa 10), com a mesma linha de comando
@@ -530,7 +528,7 @@ feito antes da mudança.
 | Risco | Mitigação |
 |---|---|
 | Firewall ou SSH bloqueia o próprio acesso | Snapshot antes de cada etapa, restauração automática temporária, segunda sessão aberta, console da VM |
-| `ssh.socket` no Ubuntu 24.04 ignora a porta configurada | Conferir com `ss -tlnp` e testar a partir de outra máquina |
+| `ssh.socket` no Ubuntu 24.04 ignora a porta configurada | Conferir com `ss -tlnp` e testar pela estação administrativa ou pelo console |
 | Varredura "antes" perdida | Executar na Etapa 2 e indexar a evidência na hora |
 | Regra ou parâmetro que ninguém sabe explicar | Matriz de regras e tabela de parâmetros obrigatórias; quem confere executa; perguntas de defesa por etapa |
 | Similaridade alta no MOSS | Código próprio, estrutura e comentários do cenário SaaS, fonte citada, conferência na Etapa 12 |
@@ -559,11 +557,11 @@ A confirmar com o professor e registrar em `docs/decisoes.md`:
 Decisões internas ainda abertas:
 
 - [x] Atribuição das trilhas: A Tiago, B Luanna, C Felipe
-- [ ] Hipervisor do laboratório
-- [ ] Banco de dados (PostgreSQL ou MySQL)
-- [ ] Porta SSH
-- [ ] Os 2 vetores de ameaça do relatório
-- [ ] Algoritmo das chaves GPG
+- [x] Hipervisor do laboratório: VirtualBox
+- [x] Banco de dados: PostgreSQL
+- [x] Porta SSH: 22022
+- [x] Os 2 vetores de ameaça do relatório
+- [x] Algoritmo das chaves GPG
 
 ---
 
@@ -573,7 +571,6 @@ O trabalho só está pronto quando **todos** os itens abaixo forem verdadeiros:
 
 - [ ] Todos os requisitos R1.1 a R3.2 marcados na seção 2, cada um com evidência indexada
 - [ ] E1, E2, E3 e E4 presentes e conferidos
-- [ ] Um clone novo do repositório, seguindo só este README, reproduz o laboratório
 - [ ] Scripts idempotentes, persistentes após reinício e aprovados no `shellcheck`
 - [ ] Comentários no padrão do guia de estilo em todo o código
 - [ ] Nenhum segredo real no repositório nem no histórico

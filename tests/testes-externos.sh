@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Nome: testes-externos.sh
 # Finalidade: Verificar serviços públicos e portas que devem permanecer fechadas.
-# Autor: DEFINIR
 # Data: 19/11/2026
 # Requisitos: Bash, curl, netcat e config/lab.env.
 # Uso: bash tests/testes-externos.sh

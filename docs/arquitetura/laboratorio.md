@@ -12,9 +12,9 @@ e uma segunda rede interna chamada `lan-ci`. O `cliente-externo` fica na WAN
 para testes a partir desse lado.
 
 Use `config/lab.env` como fonte dos parâmetros do laboratório. Valores que
-dependem do computador, da equipe ou que ainda não foram acordados permanecem
-como `DEFINIR` até serem confirmados. Os endereços temporários da LAN indicados
-neste documento servem somente à configuração inicial e não persistem após
+dependem do computador ou do ambiente local de cada integrante devem ser
+conferidos antes da execução. Os endereços temporários da LAN indicados neste
+documento servem somente à configuração inicial e não persistem após
 reinicialização.
 
 ## Máquinas virtuais
@@ -32,7 +32,8 @@ Na tabela de redes do VirtualBox, configure `wan-saas` como uma Rede NAT e
 `lan-saas` e `lan-ci` como Redes Internas. `lan-ci` é a rede de destino atrás
 do roteador `estacao-admin`. Registre em `config/lab.env` os parâmetros
 definitivos acordados, inclusive interfaces, IPs e gateway WAN. Não use valores
-de exemplo como se fossem os valores definitivos.
+de exemplo como se fossem os valores definitivos. A faixa DHCP de `wan-saas`
+pode variar conforme o ambiente e deve ser conferida no VirtualBox.
 
 ## Criação e configuração inicial
 
@@ -41,8 +42,8 @@ de exemplo como se fossem os valores definitivos.
    na tabela acima.
 2. No gerenciador de redes do VirtualBox, crie a rede NAT `wan-saas`. Habilite o
    DHCP nessa rede para a configuração inicial e confirme que as VMs conectadas
-   conseguem receber endereço. O endereço da rede e as opções DHCP dependem da
-   máquina: CONFERIR.
+   conseguem receber endereço. O endereço da rede e as opções DHCP dependem do
+   ambiente local e devem ser conferidos no VirtualBox.
 3. Crie as Redes Internas `lan-saas` e `lan-ci`. Elas não precisam de DHCP:
    os endereços temporários serão configurados manualmente.
 4. Crie a VM `srv-saas` com a versão Ubuntu Server indicada por
@@ -236,8 +237,9 @@ configuração e criar o snapshot `pre-firewall`.
 
 Configure uma pasta compartilhada apontando para o repositório no computador
 host. O nome da pasta compartilhada e o caminho do repositório variam por
-integrante: DEFINIR. A pasta deve estar acessível pelo VirtualBox na VM que será
-usada para editar ou executar os arquivos.
+integrante e devem ser conferidos no host de cada um. A pasta deve estar
+acessível pelo VirtualBox na VM que será usada para editar ou executar os
+arquivos.
 
 Na VM Linux, instale os utilitários de convidado do VirtualBox:
 
@@ -279,12 +281,11 @@ Faça os testes de conectividade:
 | `cliente-externo` | `ping -c 4 "$WAN_IP_SERVIDOR"` | Resposta do endereço WAN do servidor, sem perda de pacotes na rede local do laboratório |
 | `estacao-admin` | `ping -c 4 10.10.10.1` | Resposta do endereço LAN temporário do servidor, sem perda de pacotes |
 | `srv-saas` | `ping -c 4 "$WAN_GATEWAY"` | Resposta do gateway identificado por DHCP |
-| `srv-saas` | `ping -c 4 DEFINIR_DESTINO_CONFIRMADO` | Resposta de um destino externo confirmado pela equipe; destino: CONFERIR |
+| `srv-saas` | `getent hosts archive.ubuntu.com` | Resolução DNS funcional; a evidência 11 registrou também a conclusão de `sudo apt update` no servidor |
 
 Carregue `config/lab.env` nos shells usados para executar os comandos que
-referenciam suas variáveis. Substitua `DEFINIR_DESTINO_CONFIRMADO` por um nome ou
-endereço externo confirmado pela equipe. Se um teste falhar, confira primeiro a
-rede atribuída ao adaptador, o endereço e a rota com `ip -br addr` e `ip route`.
+referenciam suas variáveis. Se um teste falhar, confira primeiro a rede
+atribuída ao adaptador, o endereço e a rota com `ip -br addr` e `ip route`.
 O acesso do servidor à Internet e a comunicação entre os lados são critérios de
 aceite da Etapa 1.
 

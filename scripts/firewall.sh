@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Nome: firewall.sh
 # Finalidade: Aplicar, verificar, limpar e testar as regras do firewall da plataforma SaaS.
-# Autor: DEFINIR
 # Data: 19/11/2026
 # Requisitos: Bash, Ubuntu Server, iptables, iptables-save, iptables-restore e systemd.
 # Uso: sudo bash scripts/firewall.sh [--aplicar|--status|--limpar|--liberar-scan|--teste SEGUNDOS [--confirmar]]

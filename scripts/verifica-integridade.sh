@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Nome: verifica-integridade.sh
 # Finalidade: Criar e verificar uma linha de base SHA-256 dos arquivos críticos.
-# Autor: DEFINIR
 # Data: 19/11/2026
 # Requisitos: Bash, coreutils, logger, config/lab.env e acesso root.
 # Uso: sudo bash scripts/verifica-integridade.sh [--init|--check|--atualizar MOTIVO|--instalar-agendamento]

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Nome: testes-servidor.sh
 # Finalidade: Verificar localmente SSH, firewall, sistema operacional e integridade.
-# Autor: DEFINIR
 # Data: 19/11/2026
 # Requisitos: Bash, Ubuntu Server e utilitários do laboratório.
 # Uso: sudo bash tests/testes-servidor.sh

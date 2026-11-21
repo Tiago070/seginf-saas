@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Nome: hardening-so.sh
 # Finalidade: Relatar e aplicar ajustes pontuais de hardening do Ubuntu Server.
-# Autor: DEFINIR
 # Data: 19/11/2026
 # Requisitos: Bash, Ubuntu Server, apt-get e acesso root.
 # Uso: sudo bash scripts/hardening-so.sh [--relatorio|--aplicar]

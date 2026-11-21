@@ -27,8 +27,21 @@ Divergência produz alerta e código de saída `2`.
 
 O agendamento usa cron e o intervalo configurado em
 `INTEGRIDADE_INTERVALO_MINUTOS`. O caminho absoluto do script é gravado em
-`/etc/cron.d/saas-integridade`. A pasta do repositório precisa estar montada
-para que a execução periódica encontre o script e `config/lab.env`.
+`/etc/cron.d/saas-integridade`. Antes de instalar o agendamento, copie o script
+e a configuração para um diretório controlado por root. Não agende a execução
+a partir de um compartilhamento do host, pois o cron executa o script como root.
+Na raiz do repositório, instale a cópia protegida:
+
+```bash
+sudo install -d -o root -g root -m 755 /opt/seginf-saas/scripts /opt/seginf-saas/config
+sudo install -o root -g root -m 755 scripts/verifica-integridade.sh /opt/seginf-saas/scripts/verifica-integridade.sh
+sudo install -o root -g root -m 600 config/lab.env /opt/seginf-saas/config/lab.env
+sudo bash /opt/seginf-saas/scripts/verifica-integridade.sh --check
+sudo bash /opt/seginf-saas/scripts/verifica-integridade.sh --instalar-agendamento
+```
+
+Após atualizar o script ou `config/lab.env`, repita as cópias e confirme
+`--check` antes de reinstalar o agendamento.
 
 ## Mudanças legítimas
 

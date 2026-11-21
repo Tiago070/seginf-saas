@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Nome: aplica-rede.sh
 # Finalidade: Configurar endereços estáticos, rotas e encaminhamento IPv4 do servidor.
-# Autor: DEFINIR
 # Data: 18/11/2026
 # Requisitos: Bash, Ubuntu Server, Netplan e acesso ao config/lab.env.
 # Uso: sudo bash scripts/aplica-rede.sh
